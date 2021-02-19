@@ -14,7 +14,6 @@ using namespace std;
     int hp;
     int attack;
     int defense;
-    int oxygen;
     
   };
 
