@@ -5,10 +5,11 @@
 #include <iostream>
 #include "events.h"
 #include "randomdata.h"
+#include "characters.h"
 using namespace std;
 
 
-int randomchance(time_t current_time, bool movement)
+int randomchance(time_t current_time, bool movement, Character player)
 {
   int randomnum;
   int upperlimit;
@@ -30,17 +31,17 @@ int randomchance(time_t current_time, bool movement)
   }
   randomnum = rand1 % upperlimit + 1;
   if(randomnum==2){
-      stat1();
+      stat1(player);
   }else if(randomnum==3){
-      stat2();
+      stat2(player);
   }else if(randomnum==4){
-      resource1();
+      resource1(player);
   }else if(randomnum==5){
-      resource2();
+      resource2(player);
   }else if(randomnum==6){
-      combat1();
+      combat1(player);
   }else if(randomnum==7){
-      combat2();
+      combat2(player);
   }else{
       lasteventadd();
   }
