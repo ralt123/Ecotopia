@@ -1,28 +1,15 @@
-#ifndef STAT1_H
-#define STAT1_H
-#ifndef STAT2_H
-#define STAT2_H
-#ifndef RESOURCE1_H
-#define RESOURCE1_H
-#ifndef RESOURCE2_H
-#define RESOURCE2_H
-#ifndef COMBAT1_H
-#define COMBAT1_H
-#ifndef COMBAT2_H
-#define COMBAT2_H
+#ifndef EVENTS_H
+#define EVENTS_H
 #include <iostream>
+#include "characters.h"
 using namespace std;
 
-int stat1();
-int stat2();
-int resource1();
-int resource2();
-int combat1();
-int combat2();
+int stat1(Character player);
+int stat2(Character player);
+int resource1(Character player);
+int resource2(Character player);
+int combat1(Character player);
+int combat2(Character player);
 
-#endif
-#endif
-#endif
-#endif
-#endif
+
 #endif
