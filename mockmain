@@ -1,0 +1,35 @@
+#include <iostream> // ---------------------------------------------This is me making use of a mock main function to demonstrate the random events----------------
+#include "randomevents.h"
+#include "events.h"
+using namespace std;
+
+int main(){
+  time_t current_time;
+  time_t current_time1;
+  time_t second;
+  int timelimit=1;//in seconds
+  int timepassed;
+  int gen;//generated number
+  current_time = time(NULL);
+  second= time(NULL);
+  do{
+     if(second-time(NULL)>=1){
+         //get time
+         //increment 1
+         //output time to display
+         second=time(NULL);
+     }
+     //loop
+     //check player input
+     current_time1 = time(NULL);
+     timepassed=current_time1-current_time;
+  }while(timepassed<timelimit);
+  
+  current_time = time(NULL);
+  gen = randomchance(current_time, true);//done twice to show its working
+  cout << gen << endl;
+  current_time = time(NULL);
+  gen = randomchance(current_time, true);
+  cout << gen << endl;
+  return 0;
+}
