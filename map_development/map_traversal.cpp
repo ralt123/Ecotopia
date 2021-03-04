@@ -2,23 +2,16 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <windows.h>
-#include <stdlib.h> 
+#include "console_settings.h" 
 
 using namespace std;
+Console console;
 
 int input(){
-    HANDLE hstdin;
-    DWORD  mode;
-
-    hstdin = GetStdHandle( STD_INPUT_HANDLE );
-    GetConsoleMode( hstdin, &mode );
-    SetConsoleMode( hstdin, ENABLE_ECHO_INPUT | ENABLE_PROCESSED_INPUT );  
-    
+    console.console_mode("echo");
     int ch = cin.get();
     system("CLS");
-
-    SetConsoleMode( hstdin, mode ); 
+    console.console_mode("standard");
     return ch;
 }
 
@@ -48,16 +41,47 @@ std::vector<std::vector<std::string>> map_vect_generation(){
 void map_output(int x = 0, int y = 0) {
     std::vector<std::vector<std::string>> map = map_vect_generation();
     std::string player = "O";
+    std::string full_map;
+    std::string temp_map;
+    int position;
     map[y][x] = player;
+
+    // loops through each row in 2D map 
     for (int i = 0; i < map.size(); i++) {
+        
+        // loops through each charatcer in the current cycles row and adds to a string of the full row
         for (int j = 0; j < map[i].size(); j++) {
-            if (map[i][j] != "\n") {
-                 cout << map[i][j];
+            full_map +=  map[i][j];
+        }
+         // if the player is not on the row it prints the row in green fully 
+        if (full_map.find(player) == string::npos) {
+            std::cout << full_map <<'\n';
+            full_map.clear();
+            continue;
+
+
+        }
+        // if the player is on the row is splits the row in two, changing the colour of the player to red, then back to green
+        else if (full_map.find(player) != string::npos) {
+            position = full_map.find(player);
+
+            for (int i = 0; i < position; i++) {
+                temp_map.push_back(full_map[i]);
+            }
+            std::cout << temp_map;
+            console.text_colour("red");
+            std::cout << player;
+            console.text_colour("green");
+            temp_map.clear();
+
+            for (i = position+1; i < full_map.length(); i++) {
+                temp_map.push_back(full_map[i]);
             }
 
-            else cout << endl;
+            std::cout << temp_map << '\n';
+            full_map.clear();
+
         }
-        std::cout << endl;    
     }
  
 }
