@@ -1,3 +1,4 @@
+//--------------------------------------------------destroys the existing database (if there is one) and creates a new clear database-------------------
 #ifndef CREATE_DB_H
 #define CREATE_DB_H
 #include <iostream>
