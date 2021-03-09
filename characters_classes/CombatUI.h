@@ -2,8 +2,9 @@
 #define CombatUI_H
 
 #include <iostream>
+#include <cwchar>
 #include <windows.h>
-#include "CombatControl.cpp"
+#include "CombatControl.h"
 
 CombatControl CombatController;
 

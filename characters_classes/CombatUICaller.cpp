@@ -9,7 +9,7 @@ bool CombatUIRun(Player &User, Alien &Foe)
 	displayStaticFrame(User, Foe);
 	// Loops until combat ends
     while(true) {
-    	int result = combatUILoop(User, Foe) == 1;
+    	int result = combatUILoop(User, Foe);
         if (result == 1)
         {
         	return false;

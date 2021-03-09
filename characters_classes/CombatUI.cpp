@@ -42,6 +42,18 @@ int combatUILoop(Player &User, Alien &Foe)
     hstdin = GetStdHandle( STD_INPUT_HANDLE );
     GetConsoleMode( hstdin, &mode );
     SetConsoleMode( hstdin, ENABLE_ECHO_INPUT | ENABLE_PROCESSED_INPUT );  
+    
+    
+    
+    /*
+    CONSOLE_FONT_INFOEX cfi;
+			cfi.cbSize = sizeof(cfi);
+			cfi.dwFontSize.Y = 120;
+			cfi.FontWeight = FW_NORMAL;
+			std::wcscpy(cfi.FaceName, L"Consolas"); // Choose your font
+			SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+			
+			std::cout << "Font: Consolas, Size: 24\n"; */
 
 	// Retrieves the ascii value of the character inputted
     int character = std::cin.get();
@@ -66,22 +78,27 @@ int combatUILoop(Player &User, Alien &Foe)
 	case 122:
 	case 90:
 		// "z" key pressed, confirm selected action
-		clearScreen();
+		// clearScreen();
 		if (CombatController.get_combatOption() == 0)
 		{
 			while (true)
 			{
-				std::string outputString = CombatController.engageCombat(User, Foe);
+				std::string outputString = CombatController.engageDuel(User, Foe);
 				if (outputString == std::string(""))
 				{
 					CombatController.reset_animationTick();
-					break;
+					if (not (CombatController.attacking || CombatController.defending))
+					{
+						CombatController.verbSet = false;
+						break;
+					}
 				}
 				else if (outputString == std::string("victory"))
 				{
 					Sleep(500);
 					clearScreen();
-					std::cout << "You killed your foe." << std::endl;
+					std::string outputText = CombatController.lootEnemy(User, Foe);
+					std::cout << outputText << std::endl;
 					Sleep(1200);
 					// Changed to inform the player of exp gained and item drops later in development
 					return 1;
@@ -98,6 +115,46 @@ int combatUILoop(Player &User, Alien &Foe)
 				displayCombatFrame(outputString, User, Foe);
 				
 			}
+		}
+		else if (CombatController.get_combatOption() == 2)
+		{// marker
+			while (true)
+			{
+				std::string outputString = CombatController.defendingDuel(User, Foe);
+				if (outputString == std::string(""))
+				{
+					CombatController.reset_animationTick();
+					if (not (CombatController.attacking || CombatController.defending))
+					{
+						CombatController.verbSet = false;
+						break;
+					}
+				}
+				else if (outputString == std::string("victory"))
+				{
+					Sleep(500);
+					clearScreen();
+					std::cout << "You killed your foe." << std::endl;
+					delete &Foe;
+					Sleep(1200);
+					// Changed to inform the player of exp gained and item drops later in development
+					return 1;
+				}
+				else if (outputString == std::string("defeat"))
+				{
+					Sleep(500);
+					clearScreen();
+					std::cout << "Game over." << std::endl;
+					Sleep(1200);
+					return 2;
+				}
+				clearScreen();
+				displayCombatFrame(outputString, User, Foe);
+			}
+		}
+		else if (CombatController.get_combatOption() == 1)
+		{
+			User.override_stats(30,30,0,30,0,0);
 		}
 		else
 		{
