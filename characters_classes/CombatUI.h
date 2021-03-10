@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cwchar>
 #include <windows.h>
-#include "CombatControl.h"
+#include "CombatControl.cpp"
 
 CombatControl CombatController;
 

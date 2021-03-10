@@ -15,13 +15,16 @@ private:
     int animationTick;
     
 public:
-	bool attacking = false;
-	bool defending = false;
-	bool verbSet = false;
+	bool attacking;
+	bool defending;
+	bool verbSet;
 	CombatControl()
     {
         int combatOption = 0;
         int animationTick = 0;
+		verbSet = false;
+		defending = false;
+		attacking = false;
     }
 	
 	int get_animationTick() const

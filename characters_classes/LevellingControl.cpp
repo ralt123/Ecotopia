@@ -1,5 +1,7 @@
 #include <array>
-#include "Characters.h"
+#include "Character.cpp"
+#include "Alien.cpp"
+#include "Player.cpp"
 
 class levelControl
 {
