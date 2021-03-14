@@ -20,7 +20,6 @@ protected:
     int size;
 public:
   select_db(){
-    
     try
     {
     sqlite::sqlite db("defenderdata.db");
@@ -74,19 +73,51 @@ public:
     select_db();
     return alive;
   }
-  
-  void ressurect(){
+  /*
+  void ressurect(int towernumber,int defendernumber){
     select_db();
     size=towernum.size();
     for(int i=0;i<size;i++){
       if(towernum[i]==1){
         if(alive[i]==0){
-          //make alive
+          update_db u;
+          u.makealive(towernumber,defendernumber)
           break;
         }
       }
     }
+  }*/
+  
+  bool if_alive(int towernum,int defendernum){
+     bool alive;
+      try
+    {
+    sqlite::sqlite db("defenderdata.db");
+
+    auto cur = db.get_statement();        
+    cur->set_sql("SELECT alive FROM defenders WHERE towernumber=? AND defendernumber=?;");               
+    cur->prepare();
+    cur->bind( 1, towernum );
+    cur->bind( 2, defendernum );
+      
+    while (cur->step()){
+        if(cur->get_int(0)==1){
+            alive = true;
+        }else{
+            alive =false;
+        }
+
+    }
+    return alive;
   }
+  catch( sqlite::exception e )
+    {
+        cerr << e.what() << endl;
+    }
+    
+      return true;
+  }
+  
   void showall(){
         try
     {
