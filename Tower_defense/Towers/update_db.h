@@ -74,10 +74,10 @@ public:
     endloop:
     if(healthdif+dhealth>dmaxhealth){
       dhealth=dmaxhealth;
-    }else if(healthdif+dhealth<0){
+    }else if(healthdif+dhealth<=0){
       dhealth=0;
       alive=0;
-      cout << "dead"<<endl;
+      //dead
     }else{
       dhealth+=healthdif;
     }
