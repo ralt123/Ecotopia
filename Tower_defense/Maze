@@ -1,1 +1,168 @@
+#include <iostream> 
+#include <cmath>
+
+
+using namespace std;
+
+struct base
+{
+int posX ; 
+int posY ; 
+char main_tower_symbol;
+int hp;
+}main_tower;
+ 
+struct enemy1
+{
+int posX;
+int posY;
+char enemy_symbol;
+int enemy_hp;
+}enemy_soldier;
+
+
+struct enemy2
+{
+int posX;
+int posY;
+char enemy_symbol;
+int enemy_hp;
+}enemy_Tank;
+
+
+struct enemy3
+{
+int posX;
+int posY;
+char enemy_symbol;
+int enemy_hp;
+}enemy_Carry;
+ 
+void tower_hit()// function for when the main_tower hits an enemy
+{
+main_tower.hp --;
+}
+
+void enemysoldierhit(){
+enemy_soldier.enemy_hp --;
+}
+void enemyTankhit(){
+enemy_Tank.enemy_hp --;
+}
+void enemyCarryhit(){
+enemy_Carry.enemy_hp --;
+}
+
+
+int main()
+{
+const char HEIGHT = 18, WIDTH = 18; // the maze width and height 
+
+base main_tower = {0,1,'O',10};
+enemy_soldier = {3, 17, 'S',5}; 
+enemy_Tank = { 0 , 13, 'T',8};
+enemy_Carry = {17, 15, 'C',3}; 
+//placements for all the things
+
+unsigned char maze[WIDTH][HEIGHT] = 
+{
+'*',' ','*','*','*','*','*','*','*','*','*','*','*',' ','*','*','*','*',
+'*',' ','*',' ',' ',' ','*','*','*',' ',' ','*','*',' ','*',' ','*','*',
+'*',' ','*','*',' ','*','*',' ','*',' ','*','*',' ',' ','*',' ','*','*', 
+'*',' ','*','*',' ',' ',' ',' ','*',' ','*','*',' ','*','*',' ',' ',' ',
+'*',' ',' ',' ',' ','*',' ','*',' ',' ',' ',' ',' ','*','*','*',' ','*',
+'*',' ','*','*',' ','*',' ','*','*',' ','*','*',' ',' ','*',' ',' ','*',
+'*','*','*',' ',' ','*',' ','*','*',' ',' ','*',' ','*','*',' ','*','*',
+'*','*',' ',' ','*','*','*','*',' ',' ','*',' ',' ','*','*',' ','*','*',
+'*','*','*',' ','*','*','*','*','*',' ','*',' ','*','*','*',' ','*','*',
+'*',' ','*',' ',' ',' ','*','*','*',' ',' ',' ','*',' ','*',' ','*','*',
+'*',' ','*','*',' ','*','*',' ','*',' ','*','*',' ',' ','*',' ','*','*', 
+'*',' ','*','*',' ',' ',' ',' ',' ',' ','*','*',' ','*','*',' ',' ','*',
+'*',' ',' ',' ',' ','*',' ','*','*',' ','*',' ',' ','*','*','*',' ','*',
+'*',' ','*','*',' ','*',' ','*','*',' ','*','*',' ',' ',' ',' ',' ','*',
+'*','*','*',' ',' ','*',' ','*','*',' ',' ','*',' ','*','*',' ','*','*',
+'*','*','*','*',' ','*','*','*','*',' ','*',' ',' ','*','*',' ','*','*',
+'*','*','*',' ',' ',' ',' ','*','*',' ',' ',' ','*','*','*',' ','*','*',
+'*','*','*','*','*','*','*','*','*','*','*','*','*','*','*',' ','*','*',
+};
+cout << "Choose your Option: \n 1 - Buy Towers\n 2 - Place Tower\n 3 - Upgrade Tower\n 4 - Sell Towers\n 5 - Start the round.";
+
+
+
+char option = 's';
+
+bool update = false;
+
+while (option !='q') 
+{
+
+cin >> option; 
+update = true;  
+ 
+if (update == true) 
+{
+system("CLS");
+maze[enemy_soldier.posX][enemy_soldier.posY] = enemy_soldier.enemy_symbol;
+maze[enemy_Tank.posX][enemy_Tank.posY] = enemy_Tank.enemy_symbol;
+maze[enemy_Carry.posX][enemy_Carry.posY] = enemy_Carry.enemy_symbol;
+maze[main_tower.posX][main_tower.posY] = main_tower.main_tower_symbol; 
+        
+ 
+for(int y=0;y<HEIGHT;y++)
+{
+    cout << endl;
+for(int x=0;x<WIDTH;x++)
+{
+cout << maze[x][y];
+}
+}
+cout << endl << endl << "    health: " << main_tower.hp << endl << "____________________\n \n";
+update = false;
+}
+    
+switch (option) 
+{
+
+case '1':
+  update = true;
+//this where it will buy towers 
+cout << "Hi";
+break;
+
+case '2':
+  update = true;
+//this where it will place towers on map
+cout << "Hi";
+break;
+
+case '3':
+  update = true;
+//this where it will upgrade towers on map
+cout << "Hi";
+break;
+
+case '4':
+  update = true;
+//this where it will sell towers on map
+cout << "Hi";
+break;
+
+case '5':
+
+break;
+
+}
+
+
+if (main_tower.hp == 0)// when the maintower rund out of hp the ganmes stops and print out you have lost the game.
+{                    
+option = 'q';
+cout <<" you have lost the game \n";
+}
+
+
+}
+return 0;
+
+}
 
