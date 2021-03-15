@@ -32,7 +32,7 @@ int main()
     //"Empty" Item
     Item Empty{ "<Empty>", 0, 0, 0 };
 
-    vector<Item> Equipment = { 100, Empty }; //Current Equipment, 10 empty slots.
+    vector<Item> Equipment = { 100, Empty }; //Current Equipment, 100 empty slots.
     vector<Item> Inventory = { }; //Players Inventory.
     string InventorySlots[] = { "Head" "Torso", "Hands" }; //Player parts where items can be equiped.
 
