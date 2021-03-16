@@ -6,35 +6,35 @@ using namespace std;
 
 struct base
 {
-int posX ; 
-int posY ; 
+int positionX ; 
+int positionY ; 
 char main_tower_symbol;
 int hp;
 }main_tower;
  
 struct enemy1
 {
-int posX;
-int posY;
-char enemy_symbol;
+int positionX;
+int positionY;
+char enemy_soldier_symbol;
 int enemy_hp;
 }enemy_soldier;
 
 
 struct enemy2
 {
-int posX;
-int posY;
-char enemy_symbol;
+int positionX;
+int positionY;
+char enemy_tank_symbol;
 int enemy_hp;
 }enemy_Tank;
 
 
 struct enemy3
 {
-int posX;
-int posY;
-char enemy_symbol;
+int positionX;
+int positionY;
+char enemy_carry_symbol;
 int enemy_hp;
 }enemy_Carry;
  
@@ -72,15 +72,15 @@ unsigned char maze[WIDTH][HEIGHT] =
 '*',' ','*','*',' ',' ',' ',' ','*',' ','*','*',' ','*','*',' ',' ',' ',
 '*',' ',' ',' ',' ','*',' ','*',' ',' ',' ',' ',' ','*','*','*',' ','*',
 '*',' ','*','*',' ','*',' ','*','*',' ','*','*',' ',' ','*',' ',' ','*',
-'*','*','*',' ',' ','*',' ','*','*',' ',' ','*',' ','*','*',' ','*','*',
-'*','*',' ',' ','*','*','*','*',' ',' ','*',' ',' ','*','*',' ','*','*',
+'*',' ','*',' ',' ','*',' ','*','*',' ',' ','*',' ','*','*',' ','*','*',
+'*',' ',' ',' ','*','*','*','*',' ',' ','*',' ',' ','*','*',' ','*','*',
 '*','*','*',' ','*','*','*','*','*',' ','*',' ','*','*','*',' ','*','*',
 '*',' ','*',' ',' ',' ','*','*','*',' ',' ',' ','*',' ','*',' ','*','*',
 '*',' ','*','*',' ','*','*',' ','*',' ','*','*',' ',' ','*',' ','*','*', 
 '*',' ','*','*',' ',' ',' ',' ',' ',' ','*','*',' ','*','*',' ',' ','*',
-'*',' ',' ',' ',' ','*',' ','*','*',' ','*',' ',' ','*','*','*',' ','*',
-'*',' ','*','*',' ','*',' ','*','*',' ','*','*',' ',' ',' ',' ',' ','*',
-'*','*','*',' ',' ','*',' ','*','*',' ',' ','*',' ','*','*',' ','*','*',
+'*',' ',' ',' ',' ','*','*','*','*','*','*',' ',' ','*','*','*',' ','*',
+'*','*','*','*','*','*',' ','*','*',' ','*','*',' ',' ',' ',' ',' ','*',
+'*','*','*',' ',' ',' ',' ','*','*',' ',' ','*',' ','*','*',' ','*','*',
 '*','*','*','*',' ','*','*','*','*',' ','*',' ',' ','*','*',' ','*','*',
 '*','*','*',' ',' ',' ',' ','*','*',' ',' ',' ','*','*','*',' ','*','*',
 '*','*','*','*','*','*','*','*','*','*','*','*','*','*','*',' ','*','*',
@@ -102,10 +102,10 @@ update = true;
 if (update == true) 
 {
 system("CLS");
-maze[enemy_soldier.posX][enemy_soldier.posY] = enemy_soldier.enemy_symbol;
-maze[enemy_Tank.posX][enemy_Tank.posY] = enemy_Tank.enemy_symbol;
-maze[enemy_Carry.posX][enemy_Carry.posY] = enemy_Carry.enemy_symbol;
-maze[main_tower.posX][main_tower.posY] = main_tower.main_tower_symbol; 
+maze[enemy_soldier.positionX][enemy_soldier.positionY] = enemy_soldier.enemy_soldier_symbol;
+maze[enemy_Tank.positionX][enemy_Tank.positionY] = enemy_Tank.enemy_tank_symbol;
+maze[enemy_Carry.positionX][enemy_Carry.positionY] = enemy_Carry.enemy_carry_symbol;
+maze[main_tower.positionX][main_tower.positionY] = main_tower.main_tower_symbol; 
         
  
 for(int y=0;y<HEIGHT;y++)
@@ -126,38 +126,70 @@ switch (option)
 case '1':
   update = true;
 //this where it will buy towers 
-cout << "Hi";
-break;
+  cout << "Hi";
+  break;
 
 case '2':
   update = true;
 //this where it will place towers on map
-cout << "Hi";
-break;
+  cout << "Hi";
+  break;
 
 case '3':
   update = true;
 //this where it will upgrade towers on map
-cout << "Hi";
-break;
+  cout << "Hi";
+  break;
 
 case '4':
   update = true;
 //this where it will sell towers on map
-cout << "Hi";
-break;
+  cout << "Hi";
+  break;
 
 case '5':
 
-break;
+
+
+if (maze[enemy_Tank.positionX+1][enemy_Tank.positionY] != '*')
+{
+maze[enemy_Tank.positionX][enemy_Tank.positionY] = ' ';
+enemy_Tank.positionX ++;
+if (maze[main_tower.positionX ][main_tower.positionY ] == maze[enemy_Tank.positionX][enemy_Tank.positionY]){
+tower_hit();
+enemyTankhit();
+} 
+}
+else if(maze[enemy_Tank.positionX][enemy_Tank.positionY -1] != '*')
+{
+maze[enemy_Tank.positionX][enemy_Tank.positionY] = ' ';
+enemy_Tank.positionY --;
+if (maze[main_tower.positionX ][main_tower.positionY ] == maze[enemy_Tank.positionX][enemy_Tank.positionY]){
+tower_hit();
+enemyTankhit();
+} 
+}
+else if(maze[enemy_Tank.positionX+1][enemy_Tank.positionY] || maze[enemy_Tank.positionX][enemy_Tank.positionY -1] != '*')
+{
+
+maze[enemy_Tank.positionX][enemy_Tank.positionY] = ' ';
+enemy_Tank.positionX -=7;
+if (maze[main_tower.positionX ][main_tower.positionY ] == maze[enemy_Tank.positionX][enemy_Tank.positionY]){
+tower_hit();
+enemyTankhit();
+
+} 
 
 }
-
-
+}
 if (main_tower.hp == 0)// when the maintower rund out of hp the ganmes stops and print out you have lost the game.
 {                    
 option = 'q';
-cout <<" you have lost the game \n";
+cout <<" you have lost the game \n"; 
+  
+break;
+
+
 }
 
 
@@ -165,4 +197,3 @@ cout <<" you have lost the game \n";
 return 0;
 
 }
-
