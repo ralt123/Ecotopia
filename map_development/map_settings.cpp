@@ -59,7 +59,7 @@ class Map: public Chunk{
                 coords_x = Chunk::chunk_sizex-1;
             }
 
-            else if (coords_x > Chunk::chunk_sizex) {
+            else if (coords_x >= Chunk::chunk_sizex) {
                 chunk_x++;
                 coords_x = 0;
             }
@@ -69,7 +69,7 @@ class Map: public Chunk{
                 coords_y = Chunk::chunk_sizey-1;
             }
 
-            else if (coords_y > Chunk::chunk_sizey) {
+            else if (coords_y >= Chunk::chunk_sizey) {
                 chunk_y++;
                 coords_y = 0;
             }
@@ -89,10 +89,8 @@ class Map: public Chunk{
         }
 
         void map_output() {
-        std::cout << "MAP X:"<<chunk_x << " Y:"<< chunk_y <<"\n";
-        std::cout << "CHUNK X:" << coords_x << " Y: " << coords_y<< "\n";
         // validates that coords are in range, if not new chunk is made
-        if (coords_x >= Chunk::chunk_sizex-1 || coords_y >= Chunk::chunk_sizey-1) new_chunk();
+        if (coords_x >= Chunk::chunk_sizex || coords_y >= Chunk::chunk_sizey) new_chunk();
         if (coords_x == -1||coords_y == -1) new_chunk();
 
 
