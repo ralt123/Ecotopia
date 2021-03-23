@@ -21,7 +21,7 @@ std::vector<std::vector<std::string>> map_vect_generation(){
     
     std::string line, chars;
     
-    std::ifstream map("mapingfile.txt");
+    std::ifstream map("map,0-0.txt");
     while(std::getline(map, line)) {
         row.clear();
         chars.clear();
@@ -39,12 +39,14 @@ std::vector<std::vector<std::string>> map_vect_generation(){
 
 
 void map_output(int x = 0, int y = 0) {
-    std::vector<std::vector<std::string>> map = map_vect_generation();
+    std::vector<std::vector<std::string>> map;
+    map = map_vect_generation();
     std::string player = "O";
     std::string full_map;
     std::string temp_map;
     int position;
-    map[y][x] = player;
+    if (!map.empty()) map[y][x] = player;
+    else std::cout << "EMPTY!!!!";
 
     // loops through each row in 2D map 
     for (int i = 0; i < map.size(); i++) {
@@ -55,7 +57,7 @@ void map_output(int x = 0, int y = 0) {
         }
          // if the player is not on the row it prints the row in green fully 
         if (full_map.find(player) == string::npos) {
-            std::cout << full_map <<'\n';
+            std::cout << full_map <<endl;
             full_map.clear();
             continue;
 
@@ -65,8 +67,8 @@ void map_output(int x = 0, int y = 0) {
         else if (full_map.find(player) != string::npos) {
             position = full_map.find(player);
 
-            for (int i = 0; i < position; i++) {
-                temp_map.push_back(full_map[i]);
+            for (int l = 0; l < position; l++) {
+                temp_map.push_back(full_map[l]);
             }
             std::cout << temp_map;
             console.text_colour("red");
@@ -74,11 +76,11 @@ void map_output(int x = 0, int y = 0) {
             console.text_colour("green");
             temp_map.clear();
 
-            for (i = position+1; i < full_map.length(); i++) {
-                temp_map.push_back(full_map[i]);
+            for (int t = position+1; t < full_map.length(); t++) {
+                temp_map.push_back(full_map[t]);
             }
 
-            std::cout << temp_map << '\n';
+            std::cout << temp_map << endl;
             full_map.clear();
 
         }
@@ -114,6 +116,8 @@ int main() {
                 break;
         } 
         map_output(x,y);
-
     }
+
+
+    
 }
