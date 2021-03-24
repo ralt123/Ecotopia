@@ -80,12 +80,34 @@ class Map: public Chunk{
             new_chunk_name << "map," << chunk_x << "-" << chunk_y << ".txt";
 
             std::ifstream check_chunk("chunk_coords.txt");
+            bool found = false;
             while(getline(check_chunk, chunk_names)) {
-                if (chunk_names == new_chunk_name.str()) map_output();
+                if (chunk_names == new_chunk_name.str()) found = true;
             }
+            if (!found) chunk_generator(chunk_x, chunk_y);
+        }
 
-            chunk_generator(chunk_x, chunk_y);
-            map_output();
+        void interactions(std::string chunk_char, int x, int y) {
+            chunk_editor(current_chunk(), x, y);
+        }
+
+        
+        void chunk_editor(std::string name, int x, int y){
+            std::string edit_line;
+            std::vector<std::vector<std::string>> edit_vect;
+            edit_vect = map_vect_generation();
+            edit_vect[x][y] = " ";
+
+            std::fstream edit_chunk;
+            edit_chunk.open("name", std::fstream::trunc);
+            for (int i=0; i < edit_vect.size(); i++) {
+                for(int j=0; j < edit_vect[0].size(); j++ ) {
+                    edit_line += edit_vect[i][j];
+                }
+                edit_line += "\n";
+                edit_chunk << edit_line;
+                edit_line.clear();
+            }
         }
 
         void map_output() {
@@ -101,7 +123,14 @@ class Map: public Chunk{
         std::string temp_map;
         int position;
 
-        map[coords_y][coords_x] = player;
+        if (map[coords_y][coords_x] != " " || ".") {
+            map[coords_y][coords_x] = player;
+        }
+        else {
+            interactions(map[coords_y][coords_x], coords_x, coords_y);
+            map[coords_y][coords_x] = player;
+
+        }
 
 
 

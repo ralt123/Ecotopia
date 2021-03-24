@@ -7,6 +7,11 @@
 #include <ctime>
 #include <sstream>
 
+/*
+Chunk CLass
+Used to create new randomly generated chunks, in each chunk there are aliens and items that the player can interact with
+Aliens and chest have a random chance of spawning in each chunk 
+*/
 
 class Chunk {
     public:
@@ -66,7 +71,7 @@ class Chunk {
 
         void add_chunk_coords(std::string map_name) {
             std::ofstream chunk_coords;
-            chunk_coords.open("chunk_coords.txt");
+            chunk_coords.open("chunk_coords.txt",std::fstream::app);
             chunk_coords << map_name << "\n";
             chunk_coords.close();
         }
