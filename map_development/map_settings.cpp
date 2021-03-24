@@ -2,6 +2,8 @@
 #include <fstream>
 #include "console_settings.h"
 #include "chunk_generation.h"
+#include "C:\Users\peter\Documents\GitHub\Ecotopia\characters_classes\CombatUICaller.cpp"
+
 
 Console console;
 
@@ -88,26 +90,40 @@ class Map: public Chunk{
         }
 
         void interactions(std::string chunk_char, int x, int y) {
-            chunk_editor(current_chunk(), x, y);
+            if (chunk_char == "A" || chunk_char == "B" || chunk_char == "T") {
+                std::array<int,2> position = {x,y};
+                Player player(position);
+                Alien alien(position, chunk_char[0]);
+
+                CombatUIRun(player, alien);
+            }
+
+            chunk_editor(x, y);
         }
 
         
-        void chunk_editor(std::string name, int x, int y){
+        void chunk_editor(int x, int y){
             std::string edit_line;
             std::vector<std::vector<std::string>> edit_vect;
             edit_vect = map_vect_generation();
-            edit_vect[x][y] = " ";
-
+            edit_vect[y][x] = " ";
+            bool test;
             std::fstream edit_chunk;
-            edit_chunk.open("name", std::fstream::trunc);
-            for (int i=0; i < edit_vect.size(); i++) {
-                for(int j=0; j < edit_vect[0].size(); j++ ) {
-                    edit_line += edit_vect[i][j];
+            edit_chunk.open(current_chunk());
+            if (edit_chunk.is_open()) {
+                for (int i=0; i < edit_vect.size(); i++) {
+                    for(int j=0; j < edit_vect[0].size(); j++ ) {
+                        edit_line += edit_vect[i][j];
+                    }
+                    edit_line += "\n";
+                    edit_chunk << edit_line;
+                    edit_line.clear();
+                    test = true;
                 }
-                edit_line += "\n";
-                edit_chunk << edit_line;
-                edit_line.clear();
+                edit_chunk.close();
             }
+            
+
         }
 
         void map_output() {
@@ -123,7 +139,7 @@ class Map: public Chunk{
         std::string temp_map;
         int position;
 
-        if (map[coords_y][coords_x] != " " || ".") {
+        if (map[coords_y][coords_x] == " " || map[coords_y][coords_x] ==".") {
             map[coords_y][coords_x] = player;
         }
         else {
@@ -173,6 +189,8 @@ class Map: public Chunk{
 
                 }
             }
+
+            std::cout << "CHUNK["<< chunk_x<<"]["<<chunk_y<<"] | COORDS X: ["<< coords_x<<"] Y: ["<<coords_y<<"]";
     
         }
 
