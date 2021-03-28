@@ -24,8 +24,6 @@ protected:
     int level;
     std::array<int,2> position;
     
-    
-
 public:
 	char characterSymbol;
 	// Constructor method
