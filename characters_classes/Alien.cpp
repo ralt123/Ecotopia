@@ -69,8 +69,6 @@ Alien::Alien(std::array<int,2> _position, char _characterSymbol, int level, int 
 	for (int i=0; i<3; i++)
 	{
 		*availableStats[i] = statProbability[i]*availablePoints;
-		std::cout << statProbability[i]*availablePoints;
-		Sleep(3000);
 	}
 	availablePoints -= maxHealth + attack + defence;
 	// Assigns remaining points randomly using the stat probabilities
