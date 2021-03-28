@@ -1,8 +1,6 @@
 #ifndef ALIEN_H
 #define ALIEN_H
 
-#include "Character.h"
-
 #include <iostream>
 #include <array>
 #include <windows.h>
@@ -26,21 +24,22 @@ private:
     float goldGiven;
 public:
 	// Documentation for constructor method within initial class documentation
-    Alien(std::array<int,2> _position, char _characterSymbol = 'R', int level = 1);
+    Alien(std::array<int,2> _position, char _characterSymbol = 'R', int level = 1, int difficulty = 3);
     
     ~Alien();
     
+    // Get methods for private attributes
     int get_expGiven() const;
     
 	float get_goldGiven() const;
 	
     static int get_alienCount();
-    
+
     /* Used to override the amount of experience given to the player upon alien's death
-    Requires a positive integer argument to represent the new experience given amount */
+    Requires a positive integer argument to represent the new experience given amount 
+	Ideal for bosses or unique aliens */
     void experienceGivenOverride(int _expGiven);
 };
-
 
 #endif
 

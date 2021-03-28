@@ -23,6 +23,8 @@ protected:
     int defence;
     int level;
     std::array<int,2> position;
+    
+    
 
 public:
 	char characterSymbol;
@@ -38,6 +40,8 @@ public:
     No stats can be negative*/
 	void override_stats(int _maxHealth = 0, int _health = 0, int _attack = 0, int _defence = 0, int _level = 0);
 	
+	int deriveDamage(int damageReceived);
+	
 	int get_maxHealth() const;
 	
     int get_health() const;
@@ -47,6 +51,8 @@ public:
     int get_defence() const;
     
 	int get_level() const;
+	
+	std::array<int,2> get_position() const;
 	
 	// Returns all the character's stats as a single array 
 	// Return format - {maxHealth, health, attack, defence, level}

@@ -1,174 +1,157 @@
 #include "CombatUI.h"
 
-// Used to display the mandatory details for each frame
-void displayFrame(Player &User, Alien &Foe)
+void CombatUI::display_frame(Player &User, Alien &Foe)
 {
+	// Outputs health of combating characters
     std::cout << "Player  HP: " << User.get_health() << std::endl;
     std::cout << "Alien  HP: " << Foe.get_health() << std::endl;
+    
+    // Outputs player's current option during combat
     std::string optionOutput = CombatController.getCombatOptionName();
     std::cout << "<-- " << optionOutput << " -->" << std::endl;
+    
+    // Retrieves and outputs the stats of the characters participating in combat
+    std::array<int, 5> playerStats = User.get_stats_array();
+    std::array<int, 5> alienStats = Foe.get_stats_array();
+    std::cout << "Player: max hp - " << playerStats[0] << "  hp - " << playerStats[1] << "  attack - " << playerStats[2] << "  defence - " << playerStats[3] << "  level - " << playerStats[4] << "\n";
+    std::cout << "Alien: max hp - " << alienStats[0] << "  hp - " << alienStats[1] << "  attack - " << alienStats[2] << "  defence - " << alienStats[3] << "  level - " << alienStats[4] << "\n";
 }
 
-// Used to display the mandatory frames in addition to the string parameter
-void displayCombatFrame(std::string combatIcons, Player &User, Alien &Foe)
+void CombatUI::display_combat_frame(std::string combatIcons, Player &User, Alien &Foe)
 {
 	std::cout << combatIcons << std::endl;
-	displayFrame(User, Foe);
+	display_frame(User, Foe);
 }
 
-// Displays the frame whilst no animation is taking place
-void displayStaticFrame(Player &User, Alien &Foe)
+void CombatUI::display_static_frame(Player &User, Alien &Foe)
 {
-	std::cout << "P          A" << std::endl;
-	displayFrame(User, Foe);
+	std::cout << "P          " << Foe.characterSymbol << std::endl;
+	display_frame(User, Foe);
 }
 
-// Clears the screen (Hopefully a better method of clearing the screen will be found in time)
-void clearScreen()
+void CombatUI::a_key()
 {
-	system("CLS");
+	clear_screen();
+	CombatController.previous_combatOption();
+	display_static_frame(User, Foe);
 }
 
-/* The function that loops whilst the combat ui is shown to the user
-Takes a player object and alien object as arguments
-Returns an integer - 0 if the player is still in combat, 1 if the enemy died and 2 if the player died
-*/
-int combatUILoop(Player &User, Alien &Foe)
+void CombatUI::d_key()
 {
-    // Used to allow immediate input
-    HANDLE hstdin;
-    DWORD  mode;
+	clear_screen();
+	CombatController.next_combatOption();
+	display_static_frame(User, Foe);
+}
 
-    hstdin = GetStdHandle( STD_INPUT_HANDLE );
-    GetConsoleMode( hstdin, &mode );
-    SetConsoleMode( hstdin, ENABLE_ECHO_INPUT | ENABLE_PROCESSED_INPUT );  
-    
-    
-    
-    /*
-    CONSOLE_FONT_INFOEX cfi;
-			cfi.cbSize = sizeof(cfi);
-			cfi.dwFontSize.Y = 120;
-			cfi.FontWeight = FW_NORMAL;
-			std::wcscpy(cfi.FaceName, L"Consolas"); // Choose your font
-			SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
-			
-			std::cout << "Font: Consolas, Size: 24\n"; */
-
-	// Retrieves the ascii value of the character inputted
-    int character = std::cin.get();
-
-	// Runs the statement relevant to the character pressed (non-capital sensitive)
-	switch (character)
+void CombatUI::combat_action(Player &User, Alien &Foe, bool defending)
+{
+	std::string outputString;
+	CombatController.animationOngoing = true;
+	while (true)
 	{
-	case 97:
-	case 65:
-		// "a" key pressed, change selected action to previous action
-		clearScreen();
-		CombatController.previous_combatOption();
-		displayStaticFrame(User, Foe);
-		break;
-	case 100:
-	case 68:
-		// "d" key pressed, change selected action to next action
-		clearScreen();
-		CombatController.next_combatOption();
-		displayStaticFrame(User, Foe);
-		break;
-	case 122:
-	case 90:
-		// "z" key pressed, confirm selected action
-		// clearScreen();
-		if (CombatController.get_combatOption() == 0)
+		// Run if the player selected the defense action
+		if (defending)
 		{
-			while (true)
-			{
-				std::string outputString = CombatController.engageDuel(User, Foe);
-				if (outputString == std::string(""))
-				{
-					CombatController.reset_animationTick();
-					if (not (CombatController.attacking || CombatController.defending))
-					{
-						CombatController.verbSet = false;
-						break;
-					}
-				}
-				else if (outputString == std::string("victory"))
-				{
-					Sleep(500);
-					clearScreen();
-					std::string outputText = CombatController.lootEnemy(User, Foe);
-					std::cout << outputText << std::endl;
-					Sleep(1200);
-					// Changed to inform the player of exp gained and item drops later in development
-					return 1;
-				}
-				else if (outputString == std::string("defeat"))
-				{
-					Sleep(500);
-					clearScreen();
-					std::cout << "Game over." << std::endl;
-					Sleep(1200);
-					return 2;
-				}
-				clearScreen();
-				displayCombatFrame(outputString, User, Foe);
-				
-			}
+			outputString = CombatController.engageCombat(User, Foe, true);
 		}
-		else if (CombatController.get_combatOption() == 2)
-		{// marker
-			while (true)
-			{
-				std::string outputString = CombatController.defendingDuel(User, Foe);
-				if (outputString == std::string(""))
-				{
-					CombatController.reset_animationTick();
-					if (not (CombatController.attacking || CombatController.defending))
-					{
-						CombatController.verbSet = false;
-						break;
-					}
-				}
-				else if (outputString == std::string("victory"))
-				{
-					Sleep(500);
-					clearScreen();
-					std::cout << "You killed your foe." << std::endl;
-					delete &Foe;
-					Sleep(1200);
-					// Changed to inform the player of exp gained and item drops later in development
-					return 1;
-				}
-				else if (outputString == std::string("defeat"))
-				{
-					Sleep(500);
-					clearScreen();
-					std::cout << "Game over." << std::endl;
-					Sleep(1200);
-					return 2;
-				}
-				clearScreen();
-				displayCombatFrame(outputString, User, Foe);
-			}
-		}
-		else if (CombatController.get_combatOption() == 1)
-		{
-			User.override_stats(30,30,0,30,0,0);
-		}
+		// Run if the player selected the attack action
 		else
 		{
-			// CombatController.confirmChoice();
-			displayStaticFrame(User, Foe);
+			outputString = CombatController.engageCombat(User, Foe);
 		}
-		break;
-	default:
-		break;
+		// Combat conducted 
+		if (outputString == std::string(""))
+		{
+			CombatController.reset_animationTick();
+			if (not (CombatController.attacking || CombatController.defending))
+			{
+				CombatController.verbSet = false;
+				break;
+			}
+		}
+		// Enemy character is defeated
+		else if (outputString == std::string("victory"))
+		{
+			Sleep(500);
+			clear_screen();
+			std::string outputText = CombatController.lootEnemy(User, Foe);
+			std::cout << outputText << std::endl;
+			Sleep(1200);
+			returnInt = 1;
+			break;
+		}
+		// Player is defeated
+		else if (outputString == std::string("defeat"))
+		{
+			Sleep(500);
+			clear_screen();
+			std::array<int, 2> deductions = User.death();
+			std::cout << "You have died.\n\nYou lost " << deductions[0] << " and " << deductions[1] << " experience" << std::endl;
+			Sleep(1200);
+			returnInt = 2;
+			break;
+		}
+		clear_screen();
+		display_combat_frame(outputString, User, Foe);
 	}
-	//std::cout << character;
-	
-	SetConsoleMode( hstdin, mode );
-	return 0;
+}
+
+void CombatUI::z_key()
+{
+	switch (CombatController.get_combatOption())
+	{
+		// Attack option
+		case 0:
+		{
+			combat_action(User, Foe, false);
+			break;
+		}
+		// Inventory option
+		case 1:
+		{
+			User.override_stats(30,30,0,30,0,0);
+			break;
+		}
+		// Defend option
+		case 2:
+		{
+			combat_action(User, Foe, true);
+			break;
+		}
+		// Escape option
+		case 3:
+		{
+			// Add item looting when items are implemented
+			int deductedExp = (int)Foe.get_expGiven()/2;
+			std::cout << "You cowardly fled from your foe.\nYou lost " << std::to_string(deductedExp) << " experience.\n";
+			Sleep(3200);
+			returnInt = 1;	
+		}
+		default:
+		{
+			display_static_frame(User, Foe);
+			break;
+		}
+	}
+}
+
+bool CombatUI::run_loop(Player &, Alien &Foe)
+{
+	// CombatController.animationOngoing = false;
+    clear_screen();
+	display_static_frame(User, Foe);
+	// Loops until combat ends
+    while(true){
+    	int result = ui_loop();
+        if (result == 1)
+        {
+        	return false;
+		}
+		else if (result == 2)
+		{
+			return true;
+		}
+    }
 }
 
 

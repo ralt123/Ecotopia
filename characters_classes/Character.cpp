@@ -1,3 +1,6 @@
+#ifndef CHARACTER_CPP
+#define CHARACTER_CPP
+
 #include "Character.h"
 
 
@@ -6,9 +9,10 @@ Character::Character(std::array<int,2> _position)
     position = _position;
     maxHealth = 10;
     health = maxHealth;
-    attack = 5;
-    defence = 2;
+    attack = 3;
+    defence = 1;
     level = 1;
+    srand (time(0));
 }
 
 void Character::override_stats(int _maxHealth, int _health, int _attack, int _defence, int _level)
@@ -54,7 +58,10 @@ int Character::get_level() const
 {
 	return level;
 }
-
+std::array<int,2> Character::get_position() const
+{
+	return position;
+}
 
 std::array<int, 5> Character::get_stats_array() 
 {
@@ -66,6 +73,7 @@ std::map<std::string, int> Character::get_stats_map()
 {
 	std::map<std::string, int> statsMap;
 	std::array<int, 5> mapData = get_stats_array();
+	// Produces a map containing the character's stats
 	std::array<std::string, 5> mapKeys = {"maxHealth","health","attack","defence","level"};
 	for (int i=0; i<mapKeys.size(); i++)
 	{
@@ -76,6 +84,7 @@ std::map<std::string, int> Character::get_stats_map()
 
 void Character::heal(int healAmount)
 {
+	// Attempting to heal by a negative integer yields an error
     if (healAmount < 0)
     {
         throw std::invalid_argument( "cannot heal by negative number" );
@@ -92,6 +101,7 @@ void Character::heal(int healAmount)
 
 bool Character::directReduceHealth(int reduction)
 {
+	// Attempting to reduce health by a negative integer yields an error
     if (reduction < 0)
     {
         throw std::invalid_argument( "cannot reduce health by negative number" );
@@ -99,27 +109,36 @@ bool Character::directReduceHealth(int reduction)
     else
     {
         health -= reduction;
-        
-        if (health<0)
+        // Character has died, true is returned
+        if (health<=0)
         {
+        	health = 0;
             return true;
         }
         return false;
     }
 }
 
-bool Character::reduceHealth(int reduction)
+int Character::deriveDamage(int damageReceived)
 {
-	if (reduction < 0)
+	if (damageReceived < 0)
 	{
 		throw std::invalid_argument( "cannot reduce health by negative number");
 	}
-	reduction -= defence;
-	if (reduction < 1)
+	damageReceived -= defence;
+	if (damageReceived < 1)
 	{
-		reduction = 1;
+		damageReceived = 1;
 	}
+	return damageReceived;
+}
+
+bool Character::reduceHealth(int reduction)
+{
+	reduction = deriveDamage(reduction);
 	return directReduceHealth(reduction);
 }
 
+
+#endif
 

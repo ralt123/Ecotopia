@@ -1,8 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Character.h"
-#include "Alien.h"
+#include "Character.cpp"
+#include "Alien.cpp"
+#include "Stats.cpp"
 
 #include <iostream>
 #include <array>
@@ -22,25 +23,33 @@ private:
 	int experience;
     int totalExperience;
     int experiencePoints;
+    // Gold should have at most 2 decimal places
     float gold;
+    Statistics playerStatistics;
+
 public:
-	// Constructor method
+	// Constructor method - requires the player's position on the map (integer array of size 2)
     Player(std::array<int,2> _position);
     
     /* Method used to override the player's stats
-    Same as the "override_stats" in the Character class with the addition of the experience attribute, documentation is repeated for simplicity
+    Same as the "override_stats" in the Character class with the addition of the experience attribute, documentation is repeated for simplicity.
+    Experience remains unchanged when set to the integer -1
     
     Up to 6 optional arguments can be passed to override the character's stats
     Possible stats passed much all be integers and follow the order maxHealth, health, attack, defence, level, experience
     Stats set to 0 or with no argument for the corresponding parameter stat will remain unchanged
     No stats can be negative*/
-    void override_stats(int _maxHealth = 0, int _health = 0, int _attack = 0, int _defence = 0, int _level = 0, int _experience = 0);
+    void override_stats(int _maxHealth = 0, int _health = 0, int _attack = 0, int _defence = 0, int _level = 0, int _experience = -1, int _experiencePoints = -1);
     
+    // Gets methods for private attributes
     int get_experience() const;
     
 	int get_experiencePoints() const;
 	
 	float get_gold() const;
+	
+	// Set as public to allow for ease of testing
+	float derive_gold_adjustment(float baseAdjustment);
 	
 	
 	void reduce_experiencePoints(int reduceBy);
@@ -49,8 +58,9 @@ public:
     // Gold can not go below 0, if it does then gold is simply set to 0 without raising an expection 
     void alter_gold(float increaseBy);
     
-    // If the player has more or equal gold to the cost, gold is reduced by the cost and true is returned.
-    // If the player does not have sufficent funds, no gold is deducted and false is returned
+    /* If the player has more or equal gold to the cost, gold is reduced by the cost and true is returned.
+    If the player does not have sufficent funds, no gold is deducted and false is returned
+    Passed float can be negative which would result in the player gaining gold  */
     bool make_purchase(float cost);
     
     /* Method used to increase the player's experience
@@ -58,7 +68,7 @@ public:
     Accepts a positive or negative integer
     Player levels up if they have sufficient experience
     Player cannot go below 0 experience and therefore cannot delevel*/
-    bool increase_experience(int expGained);
+    bool alter_experience(int expGained);
     
     /* Player attacks the provided object of alien class
     Returns a boolean - true if the enemy is killed, false otherwise*/
@@ -72,6 +82,18 @@ public:
     Used whilst the player is defending after having selected the "defend" action and increases the player's defence by 50% when attacked
     Returns a boolean - true if the player is killed, false otherwise*/
     bool preparedDefend(Alien &other);
+    
+    /* Reduces the player's health without consideration for defense
+    returns 0 if the player died, false otherwise */
+    bool directReduceHealth(int reduction);
+    
+    /* Invoked when the player dies
+    punishes the player by deducting health and experience */
+    std::array<int, 2> death();
+    
+    /* Returns the statistic specified by the string argument
+    the string passed refers to the attribute name in the statistics class of the desired statsitic */
+    float get_statistic(std::string requestedVariable);
 };
 
 #endif
