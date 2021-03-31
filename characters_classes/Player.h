@@ -9,8 +9,10 @@
 #include <array>
 #include <windows.h>
 #include <map>
+#include <string>
 #include <stdlib.h>
 #include <time.h>
+#include <fstream>
 
 
 /* Player class, inherits from the character class
@@ -21,7 +23,6 @@ class Player: public Character
 {
 private:
 	int experience;
-    int totalExperience;
     int experiencePoints;
     // Gold should have at most 2 decimal places
     float gold;
@@ -94,6 +95,16 @@ public:
     /* Returns the statistic specified by the string argument
     the string passed refers to the attribute name in the statistics class of the desired statsitic */
     float get_statistic(std::string requestedVariable);
+    
+    /* Saves necessary player attributes to a text file
+	integer argument denoates the id of the text file 
+	returns true if the save was successful, false otherwise */
+    bool save_data(int saveFileId = 1);
+
+	/* Loads necessary player attributes from a text file
+	integer argument denoates the id of the text file
+	returns true if the load was successful, false otherwise */
+	bool load_data(int loadFileId = 1);
 };
 
 #endif

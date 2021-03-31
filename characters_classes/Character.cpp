@@ -12,7 +12,6 @@ Character::Character(std::array<int,2> _position)
     attack = 3;
     defence = 1;
     level = 1;
-    srand (time(0));
 }
 
 void Character::override_stats(int _maxHealth, int _health, int _attack, int _defence, int _level)

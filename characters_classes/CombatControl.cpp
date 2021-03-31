@@ -17,7 +17,7 @@ void CombatControl::set_animation_speed(int animationSpeed)
 	// Ensures animation speed is within the valid bounds (1 - 10)
 	if (animationSpeed < 1 || animationSpeed > 10)
 	{
-		throw std::invalid_argument( "Animation speed must be inclusively between 1 and 10");
+		throw std::invalid_argument("Animation speed must be inclusively between 1 and 10");
 	}
 	// Uses animation speed to set the animation delay
 	animationDelay = 10*(9-animationSpeed);

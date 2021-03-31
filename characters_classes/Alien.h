@@ -40,6 +40,5 @@ public:
 	Ideal for bosses or unique aliens */
     void experienceGivenOverride(int _expGiven);
 };
-
 #endif
 
