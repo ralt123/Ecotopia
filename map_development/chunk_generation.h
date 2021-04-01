@@ -67,6 +67,7 @@ class Chunk {
             
             mapchunk << char2 << "\n";
             }
+            mapchunk.close();
         } 
 
         void add_chunk_coords(std::string map_name) {

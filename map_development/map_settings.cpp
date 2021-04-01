@@ -4,7 +4,6 @@
 #include "chunk_generation.h"
 #include "C:\Users\peter\Documents\GitHub\Ecotopia\characters_classes\CombatUICaller.cpp"
 
-
 Console console;
 
 class Map: public Chunk{
@@ -91,7 +90,7 @@ class Map: public Chunk{
 
         void interactions(std::string chunk_char, int x, int y) {
             if (chunk_char == "A" || chunk_char == "B" || chunk_char == "T") {
-                std::array<int,2> position = {x,y};
+                std::array<int,2> position = {0,0};
                 Player player(position);
                 Alien alien(position, chunk_char[0]);
 
@@ -100,7 +99,6 @@ class Map: public Chunk{
 
             chunk_editor(x, y);
         }
-
         
         void chunk_editor(int x, int y){
             std::string edit_line;
@@ -124,6 +122,20 @@ class Map: public Chunk{
             }
             
 
+        }
+        
+        std::string help_output(int line) {
+            std::string output = "";
+            if (line <= 13) {
+                std::ifstream help_table;
+                help_table.open("help_table.txt");
+                for (int i=0; i < line; i++) {
+                    std::getline(help_table, output);
+                    if (i == line) {
+                    }
+                }
+            }
+            return output; 
         }
 
         void map_output() {
@@ -160,7 +172,7 @@ class Map: public Chunk{
             }
             // if the player is not on the row it prints the row in green fully 
             if (full_map.find(player) == std::string::npos) {
-                std::cout << full_map << "\n";
+                std::cout << full_map << help_output(i) << "\n";
                 full_map.clear();
                 continue;
 
@@ -184,7 +196,7 @@ class Map: public Chunk{
                     temp_map.push_back(full_map[t]);
                 }
 
-                std::cout << temp_map << "\n";
+                std::cout << temp_map << help_output(i) << "\n";
                 full_map.clear();
 
                 }
@@ -241,5 +253,4 @@ class Map: public Chunk{
 
 int main() {
     Map map;
-    std::cin.ignore();
 }
