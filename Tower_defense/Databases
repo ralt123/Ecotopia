@@ -4,12 +4,6 @@
 
 using namespace std;
 
-int callback(void *NotUsed, int length, char **value, char **column){
-  for(int i = 0; i < length; i++) {
-    cout << column[i] << ": " << value[i] << endl;
-  }
-  return 0;
-}
 
 int create_db() {
     sqlite3 *db;
