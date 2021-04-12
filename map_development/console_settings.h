@@ -52,7 +52,7 @@ class Console {
             if (colour == "green") {
                 SetConsoleTextAttribute(hstdout, FOREGROUND_GREEN);
             }
-            if (colour == "red") {
+            if (colour == "blue") {
                 SetConsoleTextAttribute(hstdout, FOREGROUND_BLUE);
             }
         }

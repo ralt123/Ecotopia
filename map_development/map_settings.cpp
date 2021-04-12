@@ -1,8 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include "console_settings.h"
-#include "chunk_generation.h"
-#include "C:\Users\peter\Documents\GitHub\Ecotopia\characters_classes\CombatUICaller.cpp"
+#include "..\includes.h"
 
 Console console;
 
@@ -187,7 +183,7 @@ class Map: public Chunk{
                     temp_map.push_back(full_map[l]);
                 }
                 std::cout << temp_map;
-                console.text_colour("red");
+                console.text_colour("blue");
                 std::cout << player;
                 console.text_colour("green");
                 temp_map.clear();
