@@ -2,6 +2,7 @@
 
 Console console;
 
+
 class Map: public Chunk{
     public:
         int chunk_x;
@@ -87,10 +88,15 @@ class Map: public Chunk{
         void interactions(std::string chunk_char, int x, int y) {
             if (chunk_char == "A" || chunk_char == "B" || chunk_char == "T") {
                 std::array<int,2> position = {0,0};
-                Player player(position);
-                Alien alien(position, chunk_char[0]);
+                //Player User(position);
+                //Alien Foe(position, chunk_char[0]);
+                
+                
 
-                CombatUIRun(player, alien);
+                if (CombatUIObject.run_loop(User, Foe))
+                {
+                    std::cout << "You died, running death screen." << std::endl;
+                }
             }
 
             chunk_editor(x, y);
