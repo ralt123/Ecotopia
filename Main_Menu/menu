@@ -149,12 +149,31 @@ void sortdata(int setting, string input, bool file) {//cleans the data
 
 }
 
+void default_settings() {
+    settings_data d;
+    ofstream myfile;
+    myfile.open("settings.txt");
+    myfile << "Degenerate Cabbage" << endl;
+    myfile << "green" << endl;
+    myfile << "@" << endl;
+    myfile << "1" << endl;
+    myfile << "200 600" << endl;
+    myfile << "C:/User/" << endl;
+    myfile.close();
+}
+
 void load_settings() {
+    begin:
     int count = 0;
     string line;
     ifstream myfile("settings.txt");
     while (getline(myfile, line))
     {
+        if (line == "") {
+            myfile.close();
+            default_settings();
+            goto begin;
+        }
         sortdata(count,line,true);
         count += 1;
     }
@@ -338,6 +357,7 @@ std::array<int, 2> settings(string fields[][3], int rows, int setting) {
     string input="";
     string placeholder = "";
     vector<string> screensize;
+    std::array<string, 6> colours = {"white","red","blue","grey","green","aqua"};
     bool valid_input = true;
     std::array<int, 2> cursor = { 0,2 };
     while (in != 13) {//13 is enter key
@@ -421,15 +441,24 @@ std::array<int, 2> settings(string fields[][3], int rows, int setting) {
         valid_input = true;
         break;
     case 1:
-        //check against valid colours
-        valid_input = true;
+        valid_input = false;
+        placeholder = "";
+        for (int i = 0; i < input.length() - 1; i++) {
+            placeholder += input[i];
+        }
+        for (int i = 0; i < colours.end() - colours.begin(); i++) {
+            if (placeholder == colours[i]) {
+                valid_input = true;
+            }
+        }
+        if (valid_input==false) {
+            cout << "colour not available";
+        }
         break;
     case 2:
         if (input.length() != 2) {//includes the enter key so 2
             valid_input = false;
             cout << "Invalid" << endl;
-            cout << input << endl;
-            cout << input.length() << endl;
         }
         break;
     case 3:
@@ -450,10 +479,9 @@ std::array<int, 2> settings(string fields[][3], int rows, int setting) {
             cout << "Invalid";
             valid_input = false;
         }
-        //screen size
         break;
     case 5:
-        //directory
+        valid_input = true;
         break;
 
     }
@@ -533,13 +561,8 @@ int main()
         goto menu;
         break;
     case 2:
-        //store directory string, animation speed, screen size maybe, player colour, name, player model , store option preferences
-        //idk
-
         nav:
         cursor = { 0,2 };
-        
-
         cursor = navigation(options, size(options), 3);
         if (cursor[0] == -1) {
             goto menu;
