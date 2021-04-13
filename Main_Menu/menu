@@ -155,9 +155,8 @@ void load_settings() {
     ifstream myfile("settings.txt");
     while (getline(myfile, line))
     {
-        //cout << "r :" << line;
         sortdata(count,line,true);
-       count += 1;
+        count += 1;
     }
     myfile.close();
 }
@@ -173,13 +172,7 @@ void store_settings() {
     myfile << d.get_screen_size()[0]<< " " << d.get_screen_size()[1] << endl;
     myfile << d.get_save_directory() << endl;
     myfile.close();
-  
-    cout << d.get_player_name() << endl;
-    cout << d.get_player_colour() << endl;
-    cout << d.get_player_character() << endl;
-    cout << d.get_animation_speed() << endl;
-    cout << d.get_screen_size()[0] << " " << d.get_screen_size()[1] << endl;
-    cout << d.get_save_directory() << endl;
+ 
 }
 
 void correct_settings(int setting,string value) {
@@ -256,7 +249,7 @@ void settings_header() {
             cout << d.get_animation_speed();
             break;
         case 4:
-            cout<<d.get_screen_size()[0] << " " << d.get_screen_size()[1];
+            cout<<d.get_screen_size()[0] << " X " << d.get_screen_size()[1];
             break;
         case 5:
             cout << d.get_save_directory();
@@ -500,7 +493,7 @@ int main()
                               {"                                                 ","difficulty "," "},
                             {"                                                  ","options "," "} };
 
-    string difficulty[7][3] ={{"                                                 "," ","<"},
+    string difficulty[7][3] ={{"                                                  ","baby mode ","<"},
                               {"                                                     ","easy "," "},
                               {"                                                    ","normal "," "},
                               {"                                                     ","hard "," "},
