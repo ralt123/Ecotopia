@@ -8,6 +8,6 @@ Player User({0,0});
 int main()
 {
 	// No data returned
-	StatsUIObject.run_loop(User);
+	StatsUIObject.run_loop();
 	return 0;
 }

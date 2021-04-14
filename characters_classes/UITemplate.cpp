@@ -32,6 +32,7 @@ int UITemplate::ui_loop()
     DWORD  dMode;
 
     consoleHandle = GetStdHandle(STD_INPUT_HANDLE);
+    SetConsoleMode(consoleHandle, ENABLE_ECHO_INPUT);  
 
 	// Retrieves the ascii value of the character inputted
     int character = std::cin.get();

@@ -2,7 +2,6 @@
 #define GRAPHING_CONTROL_H
 
 #include "Player.cpp"
-#include "SingletonTemplate.h"
 #include "StatsGraphing.cpp"
 #include "PieChart.cpp"
 
