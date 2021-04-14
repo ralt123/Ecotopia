@@ -78,5 +78,5 @@ void UITemplate::run_loop()
 {
     clear_screen();
 	display_frame();
-    while(ui_loop() != 1) {}
+    while(ui_loop() == 0) {}
 }

@@ -36,6 +36,7 @@ bool general_save_data(int saveFileId, std::string fileName, TYPE saveData)
 }
 
 // Data is loaded in the same order as it was saved
+
 /* Returns boolean to indicate saving success or failure
 saveFileId - ID of save file
 fileName - name of save file
@@ -61,6 +62,7 @@ bool general_load_data(int loadFileId, std::string fileName, TYPE arrayPointer)
 		saveFile.close();
 		int separatorPos;
 		int dataPos = 0;
+		// Loads all stored data
 		for (int i=0; i<arrayPointer->size(); i++)
 		{
 			// Gets position of separator
@@ -72,6 +74,7 @@ bool general_load_data(int loadFileId, std::string fileName, TYPE arrayPointer)
 			}
 			// Converts the extracted string attribute to an integer
 			(*arrayPointer)[i] = std::stoi(savedData.substr(dataPos, separatorPos));
+			// Sets position of data
 			dataPos = separatorPos+1;
 		}
 		return true;

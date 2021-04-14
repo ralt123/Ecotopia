@@ -28,12 +28,11 @@ public:
 	
 	virtual void invalid_key();
 	
-	/* The function that loops whilst the combat ui is shown to the user
-	Takes a player object and alien object as arguments
-	Returns an integer - 0 if the player is still in combat, 1 if the enemy died and 2 if the player died */
+	/* Method that is repeatedly called within a loop to display the UI and control user input
+	returnInt is returned and by default is 0 - the value of returnInt is expected to be modified within the child class */
 	virtual int ui_loop();
 	
-	// Method used to loop the UI until a condition within the ui_loop method is met
+	// Method used to iterate the ui_loop method until a ui_loop returns a non 0 integer
 	void run_loop();
 };
 
