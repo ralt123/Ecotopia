@@ -7,7 +7,9 @@ Player User({0,0});
 Alien Foe({0,1});
 
 #include "characters_classes\CombatUI.cpp"
+#include "Sql_development\SQL_settings.h"
 
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include<sstream>
