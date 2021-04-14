@@ -36,7 +36,7 @@ float Statistics::derive_score()
 	scoreContributionMap["totalEnemiesDefeated"] = statisticMap["totalEnemiesDefeated"] * 3;
 	scoreContributionMap["totalDamageDealt"] = statisticMap["totalDamageDealt"] / 5;
 	scoreContributionMap["totalGoldGained"] = statisticMap["totalGoldGained"] * 2;
-	std::cout << std::endl;
+
 	// Totalscore is derived and returned
 	for(int i=0; i<statisticContributionKeys.size(); i++)
 	{
