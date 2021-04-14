@@ -1,3 +1,5 @@
+#ifndef MENU_H
+#define MENU_H
 #include <iostream>
 #include <conio.h>
 #include <fstream>
@@ -577,3 +579,4 @@ int menu_function()
 
     return 0;
 }
+#endif
