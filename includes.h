@@ -1,8 +1,5 @@
 // MAIN HEADER FILE 
-
-
-
-#include "libs\sqlite3.h"
+#include "sql_development\sqlite3.h"
 #include "map_development\console_settings.h"
 #include "map_development\chunk_generation.h"
 #include "characters_classes\Player.cpp"
