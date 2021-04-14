@@ -103,6 +103,7 @@ std::string CombatControl::player_defending(Player &User, Alien &Foe)
 	std::string outputString = "";
 	char enemySymbol = Foe.characterSymbol;
 	int currentTick = get_animationTick();
+	// Controls delay between frame, delay dictated by animationDelay attribute
 	Sleep(animationDelay);
 	// Current tick dictates the current animation frame
 	if (currentTick < 4)
@@ -160,6 +161,7 @@ std::string CombatControl::player_attacking(Player &User, Alien &Foe)
 	char enemySymbol = Foe.characterSymbol;
 	std::string outputString = "";
 	int currentTick = get_animationTick();
+	// Controls delay between frame, delay dictated by animationDelay attribute
 	Sleep(animationDelay);
 	// Current tick dictates the current animation frame
 	if (currentTick < 4)

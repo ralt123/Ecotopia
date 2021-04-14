@@ -53,7 +53,7 @@ public:
 	// Set as public to allow for ease of testing
 	float derive_gold_adjustment(float baseAdjustment);
 	
-	
+	// Reduces experience points by the provided argument - argument must be positive
 	void reduce_experiencePoints(int reduceBy);
     
     // Increases the gold by the received positive/negative float argument

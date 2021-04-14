@@ -63,4 +63,3 @@ void GraphingUI::z_key()
 	std::cout << "Press w/s to return\n";
 }
 
-

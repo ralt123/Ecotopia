@@ -36,7 +36,6 @@ bool general_save_data(int saveFileId, std::string fileName, TYPE saveData)
 }
 
 // Data is loaded in the same order as it was saved
-
 /* Returns boolean to indicate saving success or failure
 saveFileId - ID of save file
 fileName - name of save file

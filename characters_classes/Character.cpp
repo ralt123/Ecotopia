@@ -143,6 +143,5 @@ bool Character::reduce_health(int reduction)
 	return direct_reduce_health(reduction);
 }
 
-
 #endif
 

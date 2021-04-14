@@ -33,7 +33,6 @@ int singleGraphCreation(std::string trackedStat, Statistics &statisticsObject)
 	double* yValues;
 	yValues = new double [entriesNum];
 	
-	
 	for (int i=0; i<entriesNum; i++)
 	{
 		yValues[i] = graphData[i];
@@ -46,7 +45,6 @@ int singleGraphCreation(std::string trackedStat, Statistics &statisticsObject)
 
 	// Produces Dislin object
 	Dislin graphObject;
-	
 	
 	// Dynamic array used as the amount of values used in the array isn't fixed
 	double* xValues;

@@ -37,6 +37,5 @@ public:
 };
 
 CombatUI CombatUIObject;
-
 #endif
 
