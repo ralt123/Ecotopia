@@ -3,6 +3,7 @@
 
 levelControl::levelControl(Player &User)
 {
+	// Retrieves the amount of available experiencePointers
 	experiencePoints = User.get_experiencePoints();
 	alterStats = {0,0,0};
 }
@@ -24,13 +25,16 @@ void levelControl::adjust_stat(int statIndex, int adjustAmount)
 
 void levelControl::reset()
 {
+	// Default values
 	alterStats = {0,0,0};
 	usedPoints = 0;
 }
 
 void levelControl::confirm(Player &User)
 {
+	// Overrides the user's stats according to the stat allocations
 	User.override_stats(User.get_maxHealth() + alterStats[0], User.get_health() + alterStats[0], User.get_attack() + alterStats[1], User.get_defence() + alterStats[2]);
+	// experiencePoints are deducted 
 	User.reduce_experiencePoints(usedPoints);
 	reset();
 }

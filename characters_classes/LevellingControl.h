@@ -17,6 +17,8 @@ private:
 	int experiencePoints;
 	
 public:
+	/* Construstor method
+	Requires the Player object of which is the subject of the levelling screen */
 	levelControl(Player &User);
 	
 	// Adjusts the amount a specified stat will be altered upon confirmation

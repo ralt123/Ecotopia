@@ -50,7 +50,7 @@ TEST_CASE( "Character Class" )
 		CHECK_THROWS(testCharacterClass.heal(-100));
 	}
 	
-	WHEN("directReduceHealth method")
+	WHEN("direct_reduce_health method")
 	{
 		std::array<int,10> healthArray = {10, 10, 10, 5, 5, 5, 1, 1, 1, 3};
 		std::array<int,10> maxHealthArray = {10, 10, 10, 10, 10, 10, 5, 5, 5, 3};
@@ -61,17 +61,17 @@ TEST_CASE( "Character Class" )
 			testCharacterClass.override_stats(maxHealthArray[i], healthArray[i], 0, 0, 0);
 			if (healthResultArray[i] == 0)
 			{
-				REQUIRE(true == testCharacterClass.directReduceHealth(reduceArray[i]));
+				REQUIRE(true == testCharacterClass.direct_reduce_health(reduceArray[i]));
 			}
 			else
 			{
-				REQUIRE(false == testCharacterClass.directReduceHealth(reduceArray[i]));
+				REQUIRE(false == testCharacterClass.direct_reduce_health(reduceArray[i]));
 			}
 			REQUIRE(testCharacterClass.get_health() == healthResultArray[i]);
 		}
 	}
 	
-	WHEN("reduceHealth method")
+	WHEN("reduce_health method")
 	{
 		std::array<int,10> healthArray = {10, 10, 10, 10, 5, 10, 5, 1, 1, 10};
 		std::array<int,10> maxHealthArray = {10, 10, 10, 10, 10, 10, 8, 10, 1, 103};
@@ -83,11 +83,11 @@ TEST_CASE( "Character Class" )
 			testCharacterClass.override_stats(maxHealthArray[i], healthArray[i], 0, defenceArray[i], 0);
 			if (healthResultArray[i] == 0)
 			{
-				REQUIRE(true == testCharacterClass.reduceHealth(reduceArray[i]));
+				REQUIRE(true == testCharacterClass.reduce_health(reduceArray[i]));
 			}
 			else
 			{
-				REQUIRE(false == testCharacterClass.reduceHealth(reduceArray[i]));
+				REQUIRE(false == testCharacterClass.reduce_health(reduceArray[i]));
 			}
 			REQUIRE(testCharacterClass.get_health() == healthResultArray[i]);
 		}

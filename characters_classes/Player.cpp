@@ -11,6 +11,8 @@ Player::Player(std::array<int,2> _position)
     experience = 0;
     gold = 10;
     experiencePoints = 3;
+    srand(time(0));
+    playerStatistics.save_data();
 }
 
 void Player::override_stats(int _maxHealth, int _health, int _attack, int _defence, int _level, int _experience, int _experiencePoints)
@@ -88,7 +90,6 @@ void Player::alter_gold(float increaseBy)
 	}
 }
 
-
 bool Player::make_purchase(float cost)
 {
 	// False is return if the player cannot afford the purchase
@@ -112,6 +113,7 @@ bool Player::alter_experience(int expGained)
 		{
 			experience -= level*5 + 5;
 			level += 1;
+			health = maxHealth;
 			experiencePoints += 1;
 		}
 		return true;
@@ -128,16 +130,16 @@ bool Player::alter_experience(int expGained)
 	return false;
 }
 
-bool Player::directReduceHealth(int reduction)
+bool Player::direct_reduce_health(int reduction)
 {
 	playerStatistics.alter_statistic("totalDamageReceived", reduction);
-	return Character::directReduceHealth(reduction);
+	return Character::direct_reduce_health(reduction);
 }
 
 bool Player::attackFoe(Alien &other)
 {
-	playerStatistics.alter_statistic("totalDamageDealt", other.deriveDamage(attack));
-    other.reduceHealth(attack);
+	playerStatistics.alter_statistic("totalDamageDealt", other.derive_damage(attack));
+    other.reduce_health(attack);
     // Enemy was defeated
     if (other.get_health() < 1)
     {
@@ -149,10 +151,10 @@ bool Player::attackFoe(Alien &other)
 
 bool Player::defend(Alien &other)
 {
-	int derivedDamage = Character::deriveDamage(other.get_attack());
+	int derivedDamage = Character::derive_damage(other.get_attack());
 	playerStatistics.alter_statistic("totalDamageReceived", derivedDamage);
 	playerStatistics.alter_statistic("totalDamageMitigated", other.get_attack() - derivedDamage);
-	reduceHealth(other.get_attack());
+	reduce_health(other.get_attack());
 	// Player was defeated
     if (health < 1)
     {
@@ -167,7 +169,7 @@ bool Player::preparedDefend(Alien &other)
 	int actualDefence = defence;
 	// Defence is increased by 50% whilst defending
 	defence = int(defence * 1.5);
-	int derivedDamage = deriveDamage(other.get_attack());
+	int derivedDamage = derive_damage(other.get_attack());
 	playerStatistics.alter_statistic("totalDamageReceived", derivedDamage);
 	playerStatistics.alter_statistic("totalDamageMitigated", other.get_attack() - derivedDamage);
 	bool result = defend(other);
@@ -198,29 +200,16 @@ float Player::get_statistic(std::string requestedVariable)
 	return playerStatistics.get_statistic(requestedVariable);
 }
 
+Statistics* Player::get_statistic_object_pointer()
+{
+	return &playerStatistics;
+}
+
 bool Player::save_data(int saveFileId)
 {
-	// Try statement used to deal with runtime errors that may arise due to user incompetence
-	try
-	{
-		// Opens text file to write data to said file
-		std::ofstream saveFile;
-		saveFile.open("playerData" + std::to_string(saveFileId) + ".txt");
-		// Wrties data to text file and closes file
-		std::array<int, 10> integerSaveData = {maxHealth, health, attack, defence, level, experience, experiencePoints, position[0], position[1], (int)gold*100};
-		for (int saveData:integerSaveData)
-		{
-			saveFile << saveData << ",";
-		}
-		saveFile.close();
-		return true;
-	}
-	// Error whilst saving file and storing attributes, return false
-	// This catch statement is most likely ran due to insufficient access rights
-	catch(...)
-	{
-		return false;
-	}
+	std::string fileName = "playerData";
+	std::array<int, 10> integerSaveData = {maxHealth, health, attack, defence, level, experience, experiencePoints, position[0], position[1], (int)gold*100};
+	return general_save_data(saveFileId, fileName, integerSaveData);
 }
 
 bool Player::load_data(int loadFileId)
@@ -228,54 +217,31 @@ bool Player::load_data(int loadFileId)
 	// Try statement used to deal with runtime errors that may arise due to user incompetence
 	try
 	{
-		// Opens file to input data from the file
-		std::ifstream saveFile;
-		saveFile.open("playerData" + std::to_string(loadFileId) + ".txt");
-		std::array<std::string, 10> attributeData;
-		std::string savedData;
-		// File not found thus false is returned
-		if (not saveFile.is_open())
+		std::string fileName = "playerData";
+		// Sets attributes
+		std::array<int*, 9> integerSaveData = {&maxHealth, &health, &attack, &defence, &level, &experience, &experiencePoints, &position[0], &position[1]};
+		std::array<int, 10> loadedData;
+		if (!general_load_data(loadFileId, fileName, &loadedData))
 		{
 			return false;
 		}
-		// Retrieves data and closes file
-		std::getline(saveFile, savedData);
-		saveFile.close();
-		int separatorPos;
-		int dataPos = 0;
-		for (int i=0; i<10; i++)
-		{
-			// Gets position of separatorseparaseparato
-			separatorPos = savedData.substr(dataPos).find(",") + dataPos;
-			// Save file was edited by a third party or corrupted, false is returned
-			if (separatorPos == -1)
-			{
-				return false;
-			}
-			// Extracts attribute
-			attributeData[i] = savedData.substr(dataPos, separatorPos);
-			dataPos = separatorPos+1;
-		}
-		// Sets attributes
-		std::array<int*, 9> integerSaveData = {&maxHealth, &health, &attack, &defence, &level, &experience, &experiencePoints, &position[0], &position[1]};
-		for (int i=0; i<10; i++)
+		for (int i=0; i<loadedData.size(); i++)
 		{
 			// Gold was multiplied by 100 to store gold as an int, must divide by 100 to receive the original value
-			if (i == 9)
+			if (i == loadedData.size()-1)
 			{
-				gold = std::stoi(attributeData[i]);
-				gold /= 100;
+				gold = loadedData[i] / 100;
 			}
 			else
 			{
-				// Converts the extracted string attribute to an integer
-				*integerSaveData[i] = std::stoi(attributeData[i]);
+				*integerSaveData[i] = loadedData[i];
 			}
 		}
 		return true;
 	}
 	// Error whilst loading file and setting attributes, return false
 	// This catch statement is most likely ran due to the save file being altered after the last save
+	// Use of offical c++ documentation to specificly only catch logic errors
 	catch(...)
 	{
 		return false;

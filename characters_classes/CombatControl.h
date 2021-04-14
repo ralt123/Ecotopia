@@ -50,25 +50,25 @@ public:
 	void previous_combatOption();
 	
 	// Returns the name of the option currently selected by the user
-	std::string getCombatOptionName();
+	std::string get_combat_option_name();
 
 	/* Returns the string to be outputted to screen
 	Player receives gold depending on the alien's "goldGiven" attribute
 	Player receives experience depending on the alien's "experienceGiven" attribute */
-	std::string lootEnemy(Player &User, Alien &Foe);
+	std::string loot_enemy(Player &User, Alien &Foe);
 	
 	/* Returns the current frame of the animation for the alien attacking the player
 	Health is deducted from the player during animation*/
-	std::string playerDefending(Player &User, Alien &Foe);
+	std::string player_defending(Player &User, Alien &Foe);
 
 	/* Returns the current frame of the animation for the player attacking the alien
 	Health is deducted from the alien during animation*/
-	std::string playerAttacking(Player &User, Alien &Foe);
+	std::string player_attacking(Player &User, Alien &Foe);
 	
 	/* Method used to allow the player to combat an alien
 	Takes in two objects as arguments - Player object, alien object and a boolean denoating if the player chose the "defend" action
 	Returns a string containing the data to be outputted to the screen */
-	std::string engageCombat(Player &User, Alien &Foe, bool _defending = false);
+	std::string engage_combat(Player &User, Alien &Foe, bool _defending = false);
 };
 #endif
 

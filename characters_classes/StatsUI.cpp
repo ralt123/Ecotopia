@@ -26,17 +26,4 @@ void StatsUI::z_key()
 	returnInt = 1;
 }
 
-void StatsUI::run_loop(Player &User)
-{
-    clear_screen();
-	display_frame();
-	// Loops until combat ends
-    while(true) {
-    	int result = ui_loop();
-        if (result == 1)
-        {
-        	break;
-		}
-    }
-}
 

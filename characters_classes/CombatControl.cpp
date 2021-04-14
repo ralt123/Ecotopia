@@ -2,10 +2,12 @@
 
 CombatControl::CombatControl()
 {
+	// Default values
     combatOption = 0;
     animationTick = 0;
     animationDelay = 50;
     
+	// Used to allow easier seperation of UI functions with the inclusion of animation
 	verbSet = false;
 	defending = false;
 	attacking = false;
@@ -62,7 +64,7 @@ void CombatControl::previous_combatOption()
     }
 }
 
-std::string CombatControl::getCombatOptionName()
+std::string CombatControl::get_combat_option_name()
 {
     // Returns the name of the current combat option
     switch(get_combatOption())
@@ -76,11 +78,11 @@ std::string CombatControl::getCombatOptionName()
     	case 3:
     		return "Escape";
     	default:
-    		throw std::invalid_argument( "Invalid combatOption");
+    		throw std::invalid_argument("Invalid combatOption");
 	}
 }
 
-std::string CombatControl::lootEnemy(Player &User, Alien &Foe)
+std::string CombatControl::loot_enemy(Player &User, Alien &Foe)
 {
 	// Add item looting when items are fully implemented
 	// Increases the player's gold and experience by the alien goldGiven and expGiven attributes
@@ -90,13 +92,13 @@ std::string CombatControl::lootEnemy(Player &User, Alien &Foe)
 	std::string returnString = "You killed your foe.\nYou gained " + std::to_string(givenExp) + " experience and " + std::to_string(givenGold) + " gold.";
 	if (User.alter_experience(givenExp))
 	{
-		returnString += "\nYou have levelled up to level " + std::to_string(User.get_level()) + "!";
+		returnString += "\nYou have levelled up to level " + std::to_string(User.get_level()) + "\nYou've been fully healed!";
 	}
 	User.alter_gold(givenGold);
 	return returnString;
 }
 
-std::string CombatControl::playerDefending(Player &User, Alien &Foe)
+std::string CombatControl::player_defending(Player &User, Alien &Foe)
 {
 	std::string outputString = "";
 	char enemySymbol = Foe.characterSymbol;
@@ -153,7 +155,7 @@ std::string CombatControl::playerDefending(Player &User, Alien &Foe)
 	return outputString;
 }
 
-std::string CombatControl::playerAttacking(Player &User, Alien &Foe)
+std::string CombatControl::player_attacking(Player &User, Alien &Foe)
 {
 	char enemySymbol = Foe.characterSymbol;
 	std::string outputString = "";
@@ -199,7 +201,7 @@ std::string CombatControl::playerAttacking(Player &User, Alien &Foe)
 	return outputString;
 }
 
-std::string CombatControl::engageCombat(Player &User, Alien &Foe, bool _defending)
+std::string CombatControl::engage_combat(Player &User, Alien &Foe, bool _defending)
 {
 	// Sets necessary attributes
 	if (not verbSet)
@@ -213,12 +215,12 @@ std::string CombatControl::engageCombat(Player &User, Alien &Foe, bool _defendin
 	// Runs animation of the player attacking the enemy
 	if (attacking)
 	{
-		return playerAttacking(User, Foe);
+		return player_attacking(User, Foe);
 	}
 	// Runs animation of the enemy attacking the player
 	else if (defending)
 	{
-		return playerDefending(User, Foe);
+		return player_defending(User, Foe);
 	}
 	// Return an empty string to signify that neither participant was defeated
 	return "";

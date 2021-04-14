@@ -119,8 +119,9 @@ int Alien::get_alienCount()
   return totalAliens;
 }
 
-void Alien::experienceGivenOverride(int _expGiven)
+void Alien::experience_given_override(int _expGiven)
 {
+	// expGiven cannot be negative
 	if (_expGiven < 0)
 	{
 		throw std::invalid_argument( "cannot set experience given below 0");

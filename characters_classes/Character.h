@@ -38,7 +38,7 @@ public:
     No stats can be negative*/
 	void override_stats(int _maxHealth = 0, int _health = 0, int _attack = 0, int _defence = 0, int _level = 0);
 	
-	int deriveDamage(int damageReceived);
+	int derive_damage(int damageReceived);
 	
 	int get_maxHealth() const;
 	
@@ -67,10 +67,10 @@ public:
 	/* Method used to directly reduce the character's health without consideration of defence
     Requires a positive integer argument to indicate the amount to reduce the health by
     Returns a boolean - True if the character died, false otherwise*/
-    bool directReduceHealth(int reduction);
+    bool direct_reduce_health(int reduction);
     
-    // Identical to directReduceHealth but considers defence
-    bool reduceHealth(int reduction);
+    // Identical to direct_reduce_health but considers defence
+    bool reduce_health(int reduction);
 };
 
 #endif

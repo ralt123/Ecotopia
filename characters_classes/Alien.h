@@ -26,6 +26,7 @@ public:
 	// Documentation for constructor method within initial class documentation
     Alien(std::array<int,2> _position, char _characterSymbol = 'R', int level = 1, int difficulty = 3);
     
+    // Deconstructor which decrements alienCount by 1
     ~Alien();
     
     // Get methods for private attributes
@@ -33,12 +34,13 @@ public:
     
 	float get_goldGiven() const;
 	
+    // Static get method that tracks the amount of existing aliens
     static int get_alienCount();
 
     /* Used to override the amount of experience given to the player upon alien's death
     Requires a positive integer argument to represent the new experience given amount 
 	Ideal for bosses or unique aliens */
-    void experienceGivenOverride(int _expGiven);
+    void experience_given_override(int _expGiven);
 };
 #endif
 

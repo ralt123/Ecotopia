@@ -6,16 +6,18 @@
 
 Character::Character(std::array<int,2> _position)
 {
+	// Default values for characters
     position = _position;
     maxHealth = 10;
     health = maxHealth;
-    attack = 3;
+    attack = 6;
     defence = 1;
     level = 1;
 }
 
 void Character::override_stats(int _maxHealth, int _health, int _attack, int _defence, int _level)
 {
+	// Health must always be less than or equal to max health
 	if (_health > _maxHealth)
 	{
 		throw std::invalid_argument( "Health cannot exceed max health" );
@@ -91,6 +93,7 @@ void Character::heal(int healAmount)
     else
     {
         health += healAmount;
+		// Ensures healing does not result in health exceeding max health
         if (maxHealth < health)
         {
             health = maxHealth;
@@ -98,7 +101,7 @@ void Character::heal(int healAmount)
     }
 }
 
-bool Character::directReduceHealth(int reduction)
+bool Character::direct_reduce_health(int reduction)
 {
 	// Attempting to reduce health by a negative integer yields an error
     if (reduction < 0)
@@ -118,13 +121,15 @@ bool Character::directReduceHealth(int reduction)
     }
 }
 
-int Character::deriveDamage(int damageReceived)
+int Character::derive_damage(int damageReceived)
 {
+	// Reduction must be positive as a reduction cannot result in healing
 	if (damageReceived < 0)
 	{
 		throw std::invalid_argument( "cannot reduce health by negative number");
 	}
 	damageReceived -= defence;
+	// Damage received cannot be less than 1
 	if (damageReceived < 1)
 	{
 		damageReceived = 1;
@@ -132,10 +137,10 @@ int Character::deriveDamage(int damageReceived)
 	return damageReceived;
 }
 
-bool Character::reduceHealth(int reduction)
+bool Character::reduce_health(int reduction)
 {
-	reduction = deriveDamage(reduction);
-	return directReduceHealth(reduction);
+	reduction = derive_damage(reduction);
+	return direct_reduce_health(reduction);
 }
 
 

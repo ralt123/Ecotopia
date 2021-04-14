@@ -7,7 +7,7 @@ void CombatUI::display_frame(Player &User, Alien &Foe)
     std::cout << "Alien  HP: " << Foe.get_health() << std::endl;
     
     // Outputs player's current option during combat
-    std::string optionOutput = CombatController.getCombatOptionName();
+    std::string optionOutput = CombatController.get_combat_option_name();
     std::cout << "<-- " << optionOutput << " -->" << std::endl;
     
     // Retrieves and outputs the stats of the characters participating in combat
@@ -52,12 +52,12 @@ void CombatUI::combat_action(Player &User, Alien &Foe, bool defending)
 		// Run if the player selected the defense action
 		if (defending)
 		{
-			outputString = CombatController.engageCombat(User, Foe, true);
+			outputString = CombatController.engage_combat(User, Foe, true);
 		}
 		// Run if the player selected the attack action
 		else
 		{
-			outputString = CombatController.engageCombat(User, Foe);
+			outputString = CombatController.engage_combat(User, Foe);
 		}
 		// Combat conducted 
 		if (outputString == std::string(""))
@@ -74,7 +74,7 @@ void CombatUI::combat_action(Player &User, Alien &Foe, bool defending)
 		{
 			Sleep(500);
 			clear_screen();
-			std::string outputText = CombatController.lootEnemy(User, Foe);
+			std::string outputText = CombatController.loot_enemy(User, Foe);
 			std::cout << outputText << std::endl;
 			Sleep(1200);
 			returnInt = 1;
@@ -135,7 +135,7 @@ void CombatUI::z_key()
 	}
 }
 
-bool CombatUI::run_loop(Player &, Alien &Foe)
+bool CombatUI::run_loop(Player &User, Alien &Foe)
 {
 	// CombatController.animationOngoing = false;
     clear_screen();

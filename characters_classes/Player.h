@@ -4,6 +4,7 @@
 #include "Character.cpp"
 #include "Alien.cpp"
 #include "Stats.cpp"
+#include "SaveManagement.cpp"
 
 #include <iostream>
 #include <array>
@@ -86,7 +87,7 @@ public:
     
     /* Reduces the player's health without consideration for defense
     returns 0 if the player died, false otherwise */
-    bool directReduceHealth(int reduction);
+    bool direct_reduce_health(int reduction);
     
     /* Invoked when the player dies
     punishes the player by deducting health and experience */
@@ -95,6 +96,8 @@ public:
     /* Returns the statistic specified by the string argument
     the string passed refers to the attribute name in the statistics class of the desired statsitic */
     float get_statistic(std::string requestedVariable);
+    
+    Statistics* get_statistic_object_pointer();
     
     /* Saves necessary player attributes to a text file
 	integer argument denoates the id of the text file 
