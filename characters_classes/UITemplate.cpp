@@ -1,3 +1,6 @@
+#ifndef UITEMPLATE_CPP
+#define UITEMPLATE_CPP
+
 #include "UITemplate.h"
 
 
@@ -80,3 +83,5 @@ void UITemplate::run_loop()
 	display_frame();
     while(ui_loop() == 0) {}
 }
+#endif
+

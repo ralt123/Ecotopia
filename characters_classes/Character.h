@@ -38,7 +38,7 @@ public:
     No stats can be negative*/
 	void override_stats(int _maxHealth = 0, int _health = 0, int _attack = 0, int _defence = 0, int _level = 0);
 	
-	// Returns the amount of damamge being dealt to the character after considering defence
+	// Returns the amount of damage being dealt to the character after considering defence
 	int derive_damage(int damageReceived);
 	
 	// Get methods for private attributes

@@ -1,3 +1,6 @@
+#ifndef UITEMPLATE_H
+#define UITEMPLATE_H
+
 // Template used for my user interfaces
 
 #include <windows.h>
@@ -35,4 +38,5 @@ public:
 	// Method used to iterate the ui_loop method until a ui_loop returns a non 0 integer
 	void run_loop();
 };
+#endif
 
