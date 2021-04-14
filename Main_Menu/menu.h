@@ -12,7 +12,7 @@ class difficulty_data //difficulty from 1-7 , make object then call get_dif() fo
 private:
     static int diff;
 public:
-    friend int main();
+    friend int menu_function();
 
     int get_dif() {
         return diff;
@@ -502,7 +502,7 @@ std::array<int, 2> settings(string fields[][3], int rows, int setting) {
 
 
 
-int main()
+int menu_function()
 {
     load_settings();
     int in=0;
