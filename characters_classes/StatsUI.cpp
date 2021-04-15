@@ -26,4 +26,12 @@ void StatsUI::z_key()
 	returnInt = 1;
 }
 
+void StatsUI::run_loop()
+{
+	clear_screen();
+	display_frame();
+    while(ui_loop() == 0) {}
+    // Screen cleared after loop to prevent text from remaining on screen when not requied
+    clear_screen();
+}
 

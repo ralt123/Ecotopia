@@ -13,6 +13,9 @@ public:
 	
 	// Only the z key is used for the statsUI - used to return to gameplay
 	void z_key();
+	
+	// Repeatedly ran method that is called within a loop to display the UI and control user input
+	void run_loop();
 };
 
 StatsUI StatsUIObject;
