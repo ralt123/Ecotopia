@@ -1,14 +1,20 @@
 #include <stdio.h>
-#include "../includes.h"
+#include <iostream>
+#include "../Sql_development/SQL_settings.h"
+#include <sstream>
+#include <vector>
+#include <fstream>
 
+std::vector<std::vector<std::string>> Sql::inventory_vector;
+std::vector<std::string> Sql::inventory_item;
 
-class Inventory: public SQL {
+class Inventory: public Sql {
    public:
    int item_counter; 
    std::ofstream inv_table;
 
       Inventory() {
-         item_counter = SQL::inventory_vector.size();
+         item_counter = Sql::inventory_vector.size();
          
       }
    
@@ -26,7 +32,7 @@ class Inventory: public SQL {
       }
 
       void ascii_table_update() {
-         if (SQL::inventory_vector.empty()) {
+         if (Sql::inventory_vector.empty()) {
             std::cout << "REEEE";
             inv_table.open("inventory.txt");
             if (inv_table.is_open()) {
@@ -44,12 +50,12 @@ class Inventory: public SQL {
             "\n|| no. ||     Name      || Type  || Stat ||" \
             "\n|]=====[]===============[]=======[]======[|";
             // ||     ||               ||       ||      ||
-            for (int i = 0; i < SQL::inventory_vector.size(); i++) {
+            for (int i = 0; i < Sql::inventory_vector.size(); i++) {
                inv_table << 
-               "\n||"+SQL::inventory_vector[i][0]+spaces_calc(5-SQL::inventory_vector[i][0].size()) \
-               +"||"+SQL::inventory_vector[i][1]+spaces_calc(15-SQL::inventory_vector[i][1].size()) \
-               +"||"+SQL::inventory_vector[i][2]+spaces_calc(7-SQL::inventory_vector[i][2].size()) \
-               +"||"+SQL::inventory_vector[i][3]+spaces_calc(6-SQL::inventory_vector[i][3].size()) \
+               "\n||"+Sql::inventory_vector[i][0]+spaces_calc(5-Sql::inventory_vector[i][0].size()) \
+               +"||"+Sql::inventory_vector[i][1]+spaces_calc(15-Sql::inventory_vector[i][1].size()) \
+               +"||"+Sql::inventory_vector[i][2]+spaces_calc(7-Sql::inventory_vector[i][2].size()) \
+               +"||"+Sql::inventory_vector[i][3]+spaces_calc(6-Sql::inventory_vector[i][3].size()) \
                +"||";
             }
             inv_table << "\n\\\\=====[]===============[]=======[]======//";
@@ -77,6 +83,8 @@ class Inventory: public SQL {
       }
 };
 
+
+/*
 int main() {
    Inventory test;
    test.return_table();
@@ -86,3 +94,4 @@ int main() {
 
 
 }
+*/
