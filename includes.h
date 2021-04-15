@@ -1,5 +1,6 @@
 // MAIN HEADER FILE 
-#include "sql_development\sqlite3.h"
+#include "item_animation/animation.h"
+#include "sql_development\libs\sqlite3.h"
 #include "map_development\console_settings.h"
 #include "map_development\chunk_generation.h"
 #include "characters_classes\Player.cpp"
@@ -8,6 +9,8 @@ Alien Foe({0,1});
 
 #include "characters_classes\CombatUI.cpp"
 #include "Sql_development\SQL_settings.h"
+#include "characters_classes\LevellingUI.cpp"
+#include "characters_classes\StatsUI.cpp"
 
 #include <fstream>
 #include <iostream>

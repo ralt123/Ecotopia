@@ -4,13 +4,11 @@
 
 class Inventory: public SQL {
    public:
-   std::vector<std::vector<std::string>> inventory;
    int item_counter; 
    std::ofstream inv_table;
 
       Inventory() {
-         inventory = get_vector();
-         item_counter = 0;
+         item_counter = SQL::inventory_vector.size();
          
       }
    
@@ -19,27 +17,50 @@ class Inventory: public SQL {
          std::stringstream item_num;
          item_num << item_counter;
          insert_item(item_num.str(), name, type, stat);
-         inventory = get_vector();
          ascii_table_update();
       }
 
       void delete_item(std::string name, std::string num) {
          remove_item(name, num);
-         inventory = get_vector();
          ascii_table_update();
       }
 
       void ascii_table_update() {
-         inv_table.open("inventory.txt");
-         inv_table << "//=====[]===============[]=======[]======\\\\" \
-         "\n|| no. ||     Name      || Type  || Stat ||" \
-         "\n|]=====[]===============[]=======[]======[|";
-         // ||     ||               ||       ||      ||
-         for (int i = 0; i < inventory.size(); i++) {
-            inv_table << "||"+inventory[i][0]+spaces_calc(5-inventory[i][0].size())+"||"+inventory[i][1]+spaces_calc(15-inventory[i][1].size())
-            +"||"+inventory[i][2]+spaces_calc(7-inventory[i][2].size())+"||"+inventory[i][3]+spaces_calc(10-inventory[i][3].size())+"||";
+         if (SQL::inventory_vector.empty()) {
+            std::cout << "REEEE";
+            inv_table.open("inventory.txt");
+            if (inv_table.is_open()) {
+               inv_table << "//=====[]===============[]=======[]======\\\\" \
+            "\n|| no. ||     Name      || Type  || Stat ||" \
+            "\n|]=====[]===============[]=======[]======[|" \
+            "\n\\\\=====[]===============[]=======[]======//";
+            
+            }
          }
-         inv_table << "\\\\=====[]===============[]=======[]======//";
+         inv_table.open("test.txt");
+         if (inv_table.is_open()) {
+            std::cout << "\nWriting:";
+            inv_table << "//=====[]===============[]=======[]======\\\\" \
+            "\n|| no. ||     Name      || Type  || Stat ||" \
+            "\n|]=====[]===============[]=======[]======[|";
+            // ||     ||               ||       ||      ||
+            for (int i = 0; i < SQL::inventory_vector.size(); i++) {
+               inv_table << 
+               "\n||"+SQL::inventory_vector[i][0]+spaces_calc(5-SQL::inventory_vector[i][0].size()) \
+               +"||"+SQL::inventory_vector[i][1]+spaces_calc(15-SQL::inventory_vector[i][1].size()) \
+               +"||"+SQL::inventory_vector[i][2]+spaces_calc(7-SQL::inventory_vector[i][2].size()) \
+               +"||"+SQL::inventory_vector[i][3]+spaces_calc(6-SQL::inventory_vector[i][3].size()) \
+               +"||";
+            }
+            inv_table << "\n\\\\=====[]===============[]=======[]======//";
+         }
+         
+
+         else {
+            std::cout << "\nWrite error!";
+         }
+
+         inv_table.close();
       }
 
       std::string spaces_calc(int num) {
@@ -51,18 +72,17 @@ class Inventory: public SQL {
          return spaces_string;
       }
 
-      void ascii_table_remove(){
+      void ascii_table_output(){
          ;
       }
 };
 
 int main() {
    Inventory test;
-   test.insert_item("0", "sword", "Weapon" , "20");
    test.return_table();
-   test.get_vector();
-   std::cout << SQL::inventory_vector[0][0];
-   if (test.inventory.empty()) {
-      std::cout << "FUCK";
-   }
+   test.add_item("sword", "weapon", "20");
+
+
+
+
 }
