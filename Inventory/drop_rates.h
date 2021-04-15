@@ -22,7 +22,7 @@ class Drops {
 
         std::string random_choice() {
             int num = rand() % 100;
-            std::cout << num;
+            // std::cout << num;
 
             if (num <= 20) {
                 return "Phaser";
