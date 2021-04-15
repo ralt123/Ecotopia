@@ -1,6 +1,5 @@
 #include <string>
 #include <iostream>
-#include "defenderclass.h"
 #include "characters.h"
 #include "towerclass.h"
 using namespace std;
