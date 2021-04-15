@@ -49,7 +49,7 @@ int main()
 		}
 		
 		else if(userChoice == 4){				
-			cout << "Gameplay will consist of exploring an unknown open world planet and gathering resources whilst improving your colony and your character with player upgrades, with some of which those player upgrades will consist off, upgrading your Armour, so less damage is delt with when in combat, weapon upgrades, and more. As for exploring the open world for recourses you farm you could use them to expand and improve the defense from pending alien attacks.\n";
+			cout << "Gameplay will consist of exploring an unknown open world planet and gathering resources whilst improving your character with player upgrades, with some of which those player upgrades will consist off, upgrading your Armour, so less damage is delt with when in combat, weapon upgrades, and more. As for exploring the open world for recourses you farm you could use them to expand and improve the defense from pending alien attacks.\n";
 			
 		}
 
