@@ -540,7 +540,7 @@ int menu_function()
 
 
     
-    cursor = navigation(main_menu, size(main_menu),1);
+    cursor = navigation(main_menu, 3,1);
     if (cursor[0] == -1) {
         goto menu;
     }
@@ -552,7 +552,7 @@ int menu_function()
         //start game
         break;
     case 1:
-        cursor = navigation(difficulty, size(difficulty),2);
+        cursor = navigation(difficulty, 7,2);
         if (cursor[0] == -1) {
             goto menu;
         }
@@ -565,11 +565,11 @@ int menu_function()
     case 2:
         nav:
         cursor = { 0,2 };
-        cursor = navigation(options, size(options), 3);
+        cursor = navigation(options, 6, 3);
         if (cursor[0] == -1) {
             goto menu;
         }
-        settings(options, size(options),cursor[0]);
+        settings(options, 6,cursor[0]);
         goto nav;
         
         break;
