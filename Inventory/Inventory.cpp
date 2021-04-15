@@ -33,7 +33,6 @@ class Inventory: public Sql {
 
       void ascii_table_update() {
          if (Sql::inventory_vector.empty()) {
-            std::cout << "REEEE";
             inv_table.open("inventory.txt");
             if (inv_table.is_open()) {
                inv_table << "//=====[]===============[]=======[]======\\\\" \
@@ -43,9 +42,9 @@ class Inventory: public Sql {
             
             }
          }
-         inv_table.open("test.txt");
+         inv_table.open("inventory.txt");
          if (inv_table.is_open()) {
-            std::cout << "\nWriting:";
+            // std::cout << "\nWriting:";
             inv_table << "//=====[]===============[]=======[]======\\\\" \
             "\n|| no. ||     Name      || Type  || Stat ||" \
             "\n|]=====[]===============[]=======[]======[|";
@@ -63,7 +62,8 @@ class Inventory: public Sql {
          
 
          else {
-            std::cout << "\nWrite error!";
+            //std::cout << "\nWrite error!";
+            ;
          }
 
          inv_table.close();

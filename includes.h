@@ -12,6 +12,7 @@ Alien Foe({0,1});
 #include "characters_classes\StatsUI.cpp"
 #include "Inventory\drop_rates.h"
 #include "Inventory\Inventory.cpp"
+#include "Main_Menu\menu.h"
 
 #include <fstream>
 #include <iostream>

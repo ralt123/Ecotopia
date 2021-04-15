@@ -105,8 +105,10 @@ class Map: public Chunk{
                         item_animation.wait_timer();
                     }
                 }
-                std::cout << "\n" << item;
+                std::cout << "\n YOU FOUND: -- " << item <<" --";
                 item_animation.wait_timer();
+                item_animation.wait_timer();
+                system("CLS");
 
             }
             
@@ -142,7 +144,7 @@ class Map: public Chunk{
             std::string output = "";
             if (line <= 15) {
                 std::ifstream help_table;
-                help_table.open("C:/Users/peter/Documents/GitHub/Ecotopia/map_development/help_table.txt");
+                help_table.open("C:/Users/peter/Documents/GitHub/Ecotopia/help_table.txt");
                 if (help_table.is_open()) {
                     for (int i=0; i < line; i++) {
                         std::getline(help_table, output);
@@ -238,7 +240,7 @@ class Map: public Chunk{
         void inventory_output() {
             std::ifstream inventory;
             std::string lines;
-            inventory.open("C:/Users/peter/Documents/GitHub/Ecotopia/Inventory/Inventory.txt");
+            inventory.open("C:/Users/peter/Documents/GitHub/Ecotopia/inventory.txt");
             if (inventory.is_open()) {
                 while (std::getline(inventory, lines)) {
                 std::cout << lines << "\n";
@@ -254,7 +256,7 @@ class Map: public Chunk{
                 }
             }
             else {
-                std::cout << "FUCK";
+                std::cout << "ERROR";
                 std::cin.ignore();
                 map_output();
             }
@@ -311,5 +313,6 @@ class Map: public Chunk{
 
 
 int main() {
+    menu_function();
     Map map;
 }
