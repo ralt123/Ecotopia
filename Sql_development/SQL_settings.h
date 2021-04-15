@@ -1,7 +1,7 @@
 #include "C:/sqlite3/sqlite3.h"
-#include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <sstream>
 
 /* 
 References:
@@ -11,7 +11,7 @@ https://stackoverflow.com/questions/14437433/proper-use-of-callback-function-of-
 https://www.w3schools.com/sql/default.asp
 */
 // sqlite handling class:
-class SQL {
+class Sql {
     public:
         // pointer to sqlite3 type, needed for _exec commands
         sqlite3 *db;
@@ -28,7 +28,7 @@ class SQL {
 
         // item Count
 
-        SQL() {
+        Sql() {
             // Connects to inventory database where the inventory table is stored  
             rc = sqlite3_open("inventory.db", &db);
             // Creates table on innitialisation of object
@@ -116,9 +116,9 @@ class SQL {
 
 };
 
-//declare static attribute
-std::vector<std::vector<std::string>> SQL::inventory_vector;
-std::vector<std::string> SQL::inventory_item;
+//initsializing static attribute
+//std::vector<std::vector<std::string>> SQL::inventory_vector = {};
+//std::vector<std::string> SQL::inventory_item = {};
 
 /*
 //TEsting
