@@ -1,3 +1,4 @@
+// Redeclaration errors may arise during integration thus guards are put in place to prevent this
 #ifndef UITEMPLATE_CPP
 #define UITEMPLATE_CPP
 
@@ -28,7 +29,7 @@ void UITemplate::invalid_key() {}
 int UITemplate::ui_loop()
 {
     // Used to allow immediate input
-    // Code responsible for allowing immediate input was produced using offical documentation
+    // Code responsible for allowing immediate input was produced using official documentation
     // https://docs.microsoft.com/en-us/windows/console/using-the-high-level-input-and-output-functions
     // https://docs.microsoft.com/en-us/windows/console/setconsolemode
 	HANDLE consoleHandle;
@@ -79,9 +80,13 @@ int UITemplate::ui_loop()
 
 void UITemplate::run_loop()
 {
+	// Clears whatever was on the screen before the method was called
     clear_screen();
+    // Displays the initial frame 
 	display_frame();
+	// Loops until the ui_loop returns a non 0 integer 
     while(ui_loop() == 0) {}
+    // Clears screen before returning control to the caller
 	clear_screen();
 }
 #endif
