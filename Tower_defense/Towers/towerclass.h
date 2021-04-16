@@ -9,7 +9,7 @@
 #include "insert_db.h"
 #include "select_db.h"
 #include "update_db.h"
-#include "TD.h"
+#include "TowerDefense.h"
 using namespace std;
 
 class tower
