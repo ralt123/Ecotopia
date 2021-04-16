@@ -7,6 +7,8 @@
 #include <array>
 #include <vector>
 #include <cstring> 
+#include <tchar.h>
+#include "helpFunction.h"
 using namespace std;
 
 class difficulty_data //difficulty from 1-7 , make object then call get_dif() for difficulty level
@@ -14,12 +16,12 @@ class difficulty_data //difficulty from 1-7 , make object then call get_dif() fo
 private:
     static int diff;
 public:
-    friend int menu_function();
+    friend int main_menu();
 
     int get_dif() {
         return diff;
     }
-    
+
     int get_multiplier() {
         switch (diff) {
         case 1:
@@ -44,18 +46,18 @@ public:
 
 int difficulty_data::diff;
 
-class settings_data 
+class settings_data
 {
 private:
     static string player_name;
     static string player_colour;
     static char player_character;
-    static int animation_speed ;
+    static int animation_speed;
     static std::vector<int> screen_size;
     static string save_directory;
 
 public:
-    friend void sortdata(int setting, string input,bool file);
+    friend void sortdata(int setting, string input, bool file);
 
     string get_player_name() {
         return player_name;
@@ -82,7 +84,7 @@ string settings_data::player_name;
 string settings_data::player_colour;
 char settings_data::player_character;
 int settings_data::animation_speed;
-vector<int> settings_data::screen_size = {200,600};
+vector<int> settings_data::screen_size = { 200,600 };
 string settings_data::save_directory;
 
 void sortdata(int setting, string input, bool file) {//cleans the data
@@ -165,7 +167,7 @@ void default_settings() {
 }
 
 void load_settings() {
-    begin:
+begin:
     int count = 0;
     string line;
     ifstream myfile("settings.txt");
@@ -176,7 +178,7 @@ void load_settings() {
             default_settings();
             goto begin;
         }
-        sortdata(count,line,true);
+        sortdata(count, line, true);
         count += 1;
     }
     myfile.close();
@@ -190,14 +192,14 @@ void store_settings() {
     myfile << d.get_player_colour() << endl;
     myfile << d.get_player_character() << endl;
     myfile << d.get_animation_speed() << endl;
-    myfile << d.get_screen_size()[0]<< " " << d.get_screen_size()[1] << endl;
+    myfile << d.get_screen_size()[0] << " " << d.get_screen_size()[1] << endl;
     myfile << d.get_save_directory() << endl;
     myfile.close();
- 
+
 }
 
-void correct_settings(int setting,string value) {
-    sortdata(setting, value,false);
+void correct_settings(int setting, string value) {
+    sortdata(setting, value, false);
     store_settings();
 }
 
@@ -210,15 +212,14 @@ void header1() {
                     "               888       888        888     888    888    888     888 8888888P'   888      d88P  888 ",
                     "               888       888    888 888     888    888    888     888 888         888     d88P   888 ",
                     "               888       Y88b  d88P Y88b. .d88P    888    Y88b. .d88P 888         888    d8888888888 ",
-                    "               8888888888 'Y8888P'   'Y88888P'     888     'Y88888P'  888       8888888 d88P     888",
-                   };
-    
+                    "               8888888888 'Y8888P'   'Y88888P'     888     'Y88888P'  888       8888888 d88P     888 ",
+    };
+
     for (int i = 0; i < 5; i++) {
         cout << endl;
-
     }
-    
-    
+
+
     for (int i = 0; i < 9; i++) {
         cout << endl;
         cout << header[i];
@@ -231,15 +232,15 @@ void header1() {
 
 void header2() {
     cout << endl;
-    string header[3] = {"                                              /////////////////////",
+    string header[3] = { "                                              /////////////////////",
                         "                                              //// DIFFICULTY /////",
                         "                                              /////////////////////" };
     for (int i = 0; i < 3; i++) {
         cout << endl;
         cout << header[i];
-         
+
     }
-    
+
     cout << endl;
     cout << endl;
 }
@@ -256,7 +257,7 @@ void settings_header() {
         cout << endl;
         cout << options[i][1];
         cout << " : ";
-        switch(i) {
+        switch (i) {
         case 0:
             cout << d.get_player_name();
             break;
@@ -270,7 +271,7 @@ void settings_header() {
             cout << d.get_animation_speed();
             break;
         case 4:
-            cout<<d.get_screen_size()[0] << " X " << d.get_screen_size()[1];
+            cout << d.get_screen_size()[0] << " X " << d.get_screen_size()[1];
             break;
         case 5:
             cout << d.get_save_directory();
@@ -280,17 +281,17 @@ void settings_header() {
     }
 }
 
-std::array<int, 2> navigation(string fields[][3],int rows,int header_num) {
+std::array<int, 2> navigation(string fields[][3], int rows, int header_num) {
     int in = 0;
     char letter = 'o';
     std::array<int, 2> cursor = { 0,2 };
     for (int i = 0; i < rows; i++) {
         if (fields[i][2] == "<") {
-            cursor = {i,2};
+            cursor = { i,2 };
         }
     }
     while (in != 13) {//13 is enter key
-        switch(header_num) {
+        switch (header_num) {
         case 1:
             header1();
             break;
@@ -313,7 +314,7 @@ std::array<int, 2> navigation(string fields[][3],int rows,int header_num) {
         //cout<<cursor[0]<<cursor[1] << endl;
         cout << endl;
         letter = _getch();
-        in = letter; 
+        in = letter;
         cout << letter;
         if (letter == 's' && cursor[0] + 1 < rows)
         {
@@ -353,13 +354,13 @@ std::array<int, 2> settings(string fields[][3], int rows, int setting) {
     char letter = 'o';
     int lim = 5;
     int count = 0;
-    int out1 ;  //for handling output
-    string out2 ;
-    int out3 ;
-    string input="";
+    int out1;  //for handling output
+    string out2;
+    int out3;
+    string input = "";
     string placeholder = "";
     vector<string> screensize;
-    std::array<string, 6> colours = {"white","red","blue","grey","green","aqua"};
+    std::array<string, 6> colours = { "white","red","blue","grey","green","aqua" };
     bool valid_input = true;
     std::array<int, 2> cursor = { 0,2 };
     while (in != 13) {//13 is enter key
@@ -372,37 +373,37 @@ std::array<int, 2> settings(string fields[][3], int rows, int setting) {
                     if (setting == 4) {
                         if (screensize.end() - screensize.begin() == 1) {
                             cout << " : " << screensize[0] << " X " << input;
-                            
+
                         }
                         else {
                             cout << " : " << input;
-                        } 
+                        }
                     }
                     else {
                         cout << " : " << input;
                         count += 1;
                     }
-                    
-                    
+
+
                 }
 
-                out:
+            out:
                 {}
             }
         }
 
         cout << endl;
-        letter = _getch();        
+        letter = _getch();
         input = input + letter;
         in = letter;
         if (in == 13 && setting == 4) {
-            if (screensize.end()-screensize.begin()!=2) {
+            if (screensize.end() - screensize.begin() != 2) {
                 for (int i = 0; i < input.length() - 1; i++) {
                     placeholder += input[i];
                 }
                 screensize.push_back(placeholder);
                 placeholder = "";
-                input = ""; 
+                input = "";
                 in = 0;
             }
             if (screensize.end() - screensize.begin() == 2) {
@@ -423,17 +424,17 @@ std::array<int, 2> settings(string fields[][3], int rows, int setting) {
                 input = "";
                 in = 0;
             }
-            if(screensize.end() - screensize.begin() == 2) {
+            if (screensize.end() - screensize.begin() == 2) {
                 in = 13;//exits
                 out1 = stoi(screensize[0]);
                 out2 = " X ";
                 out3 = stoi(screensize[1]);
             }
         }
-        
+
         if (in == 8) {//8 is backspace
             system("CLS");
-            return {-1,-1};
+            return { -1,-1 };
         }
         cout << letter;
         system("CLS");
@@ -453,7 +454,7 @@ std::array<int, 2> settings(string fields[][3], int rows, int setting) {
                 valid_input = true;
             }
         }
-        if (valid_input==false) {
+        if (valid_input == false) {
             cout << "colour not available";
         }
         break;
@@ -487,7 +488,7 @@ std::array<int, 2> settings(string fields[][3], int rows, int setting) {
         break;
 
     }
-    if (valid_input) {       
+    if (valid_input) {
         if (setting == 4) {
             cout << "changed " << fields[setting][1] << "to :" << out1 << out2 << out3;
             input = screensize[0] + " " + screensize[1];
@@ -495,7 +496,7 @@ std::array<int, 2> settings(string fields[][3], int rows, int setting) {
         else {
             cout << "changed " << fields[setting][1] << "to :" << input;
         }
-        sortdata(setting, input,false);
+        sortdata(setting, input, false);
     }
     return cursor;
 }
@@ -504,78 +505,83 @@ std::array<int, 2> settings(string fields[][3], int rows, int setting) {
 
 
 
-int menu_function()
+int main_menu()
 {
     load_settings();
-    int in=0;
-    char letter='o';
+    int in = 0;
+    char letter = 'o';
     int difficulty_level = 1;
     int rows;
-    std::array<int, 2> cursor = {1,1};
-    
+    std::array<int, 2> cursor = { 1,1 };
 
 
 
-    menu:
+
+menu:
     store_settings();
 
-    string main_menu[3][3] = { {"                                                   ","Start ","<"},
+    string main_menu[4][3] = { {"                                                   ","Start ","<"},
                               {"                                                 ","difficulty "," "},
-                            {"                                                  ","options "," "} };
+                              {"                                                  ","options "," "},
+                              {"                                                    ","help ", " "}};
 
-    string difficulty[7][3] ={{"                                                  ","baby mode ","<"},
+    string difficulty[7][3] = { {"                                                  ","baby mode ","<"},
                               {"                                                     ","easy "," "},
                               {"                                                    ","normal "," "},
                               {"                                                     ","hard "," "},
                               {"                                                  ","very hard "," "},
                               {"                                                   ","big oof "," "},
-                              {"                                          ","intense pscological torture "," "}};
+                              {"                                          ","intense psychological torture "," "} };
 
-    string options[6][3] = {  {"                                                  ","player name ","<"},
+    string options[6][3] = { {"                                                  ","player name ","<"},
                               {"                                                 ","player colour  "," "},
                               {"                                               ","player character "," "},
                               {"                                                ","animation speed  "," "},
                               {"                                                  ","screen size "," "},
-                              {"                                                 ","save directory  "," "}};
+                              {"                                                 ","save directory  "," "} };
 
 
-    
-    cursor = navigation(main_menu, 3,1);
+
+    cursor = navigation(main_menu, size(main_menu), 1);
     if (cursor[0] == -1) {
         goto menu;
     }
 
 
     switch (cursor[0]) {
-    case 0 :
+    case 0:
         cout << "buckle up shit nugget" << endl;
         //start game
         break;
     case 1:
-        cursor = navigation(difficulty, 7,2);
+        cursor = navigation(difficulty, size(difficulty), 2);
         if (cursor[0] == -1) {
             goto menu;
         }
         difficulty_level = cursor[0];
-        cout << "changed to difficulty level : " << difficulty[difficulty_level][1] ;
+        cout << "changed to difficulty level : " << difficulty[difficulty_level][1];
         difficulty_data d;
         d.diff = difficulty_level + 1;
         goto menu;
         break;
     case 2:
-        nav:
+    nav:
         cursor = { 0,2 };
-        cursor = navigation(options, 6, 3);
+        cursor = navigation(options, size(options), 3);
         if (cursor[0] == -1) {
             goto menu;
         }
-        settings(options, 6,cursor[0]);
+        settings(options, size(options), cursor[0]);
         goto nav;
-        
+
+        break;
+    case 3:
+        helpFunction();
+        goto menu;
         break;
     }
-    
-    cout << cursor[0]<<cursor[1]<<endl;
+
+    cout << cursor[0] << cursor[1] << endl;
 
     return 0;
 }
