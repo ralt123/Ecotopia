@@ -39,7 +39,7 @@ int helpFunction()
 		}
 		
 		else if(userChoice == 2){				
-			cout << "Aliens will attack you if you walk over them or start shooting at you if you shoot at them first, if you keep your distance and not attack, you could avoid them by sneaking away.\n";
+			cout << "Aliens will attack you if you walk over them or start shooting at you, if you attack them first, if you keep your distance and not attack, you could avoid them by sneaking away.\n";
 			
 		}
 		
@@ -49,7 +49,7 @@ int helpFunction()
 		}
 		
 		else if(userChoice == 4){				
-			cout << "Gameplay will consist of exploring an unknown open world planet and gathering resources whilst improving your character with player upgrades, with some of which those player upgrades will consist off, upgrading your Armour, so less damage is delt with when in combat, weapon upgrades, and more. As for exploring the open world for recourses you farm you could use them to expand and improve the defense from pending alien attacks.\n";
+			cout << "Gameplay will consist of exploring an unknown open world planet and gathering resources whilst improving your character with player upgrades, with some of which those player upgrades will consist off, upgrading your Armour, so less damage is delt with when in combat, weapon upgrades, and more. As for exploring the open world for recourses you farm and you could use them to expand and improve the defence from pending alien attacks.\n";
 			
 		}
 
