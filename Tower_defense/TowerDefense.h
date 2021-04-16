@@ -663,7 +663,7 @@ int TowerDefensemain()
 {
     initialiser();
     cout << "currency = 3000"<<endl;
-    cout << "Choose your Option: \n 1 - Buy Towers\n 2 - Place Tower\n 3 - Upgrade Tower\n 4 - Sell Towers\n q - Start the round." << endl;
+    cout << "Choose your Option: \n 1 - Buy Towers\n 2 - Upgrade Tower\n 3 - Sell Towers\n q - Start the round." << endl;
     char ch = _getch();
 
     maze d;
