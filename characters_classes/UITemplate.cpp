@@ -82,6 +82,7 @@ void UITemplate::run_loop()
     clear_screen();
 	display_frame();
     while(ui_loop() == 0) {}
+	clear_screen();
 }
 #endif
 

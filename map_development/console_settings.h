@@ -30,7 +30,7 @@ class Console {
             hstdin = GetStdHandle( STD_INPUT_HANDLE );
             hstdout = GetStdHandle( STD_OUTPUT_HANDLE );
             GetConsoleMode( hstdin, &mode );
-            window_size(240,34);
+            window_size(240,200);
             text_colour("green");
             console_title();
         }
@@ -53,7 +53,7 @@ class Console {
                 SetConsoleTextAttribute(hstdout, FOREGROUND_GREEN);
             }
             if (colour == "blue") {
-                SetConsoleTextAttribute(hstdout, FOREGROUND_BLUE);
+                SetConsoleTextAttribute(hstdout, 0xb);
             }
         }
 

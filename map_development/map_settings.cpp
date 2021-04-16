@@ -1,7 +1,9 @@
 #include "..\includes.h"
 
 Console console;
-
+Animation item_animation;
+Drops drop_rates;
+Inventory inv;
 
 class Map: public Chunk{
     public:
@@ -17,7 +19,7 @@ class Map: public Chunk{
             coords_y = 0;
 
 
-            game();
+            map_output();
         }
 
         std::string current_chunk() {
@@ -27,27 +29,23 @@ class Map: public Chunk{
         }
 
         std::vector<std::vector<std::string>> map_vect_generation(){
+            std::vector<std::vector<std::string>> mapvect;
+            std::vector<std::string> row;
+            std::string line, chars;
 
-        std::vector<std::vector<std::string>> mapvect;
-        std::vector<std::string> row;
-        
-        std::string line, chars;
-
-        
-        std::ifstream map(current_chunk());
-        while(std::getline(map, line)) {
-            row.clear();
-            chars.clear();
-            for (int i = 0; i <= line.size(); i++) {
+            std::ifstream map(current_chunk());
+            while(std::getline(map, line)) {
+                row.clear();
                 chars.clear();
-                chars.push_back(line[i]);
-                row.push_back(chars);
+                for (int i = 0; i <= line.size(); i++) {
+                    chars.clear();
+                    chars.push_back(line[i]);
+                    row.push_back(chars);
 
+                }
+                mapvect.push_back(row);
             }
-            mapvect.push_back(row);
-        }
-
-        return mapvect;
+            return mapvect;
         }
 
         void new_chunk() {
@@ -98,6 +96,22 @@ class Map: public Chunk{
                     std::cout << "You died, running death screen." << std::endl;
                 }
             }
+            else if (chunk_char == "o") {
+                item_animation.full_animation();
+                std::string item = drop_rates.random_choice();
+                for (int i = 0; i < drop_rates.stats.size(); i++) {
+                    if (drop_rates.stats[i][0] == item) {
+                        inv.add_item(drop_rates.stats[i][0], drop_rates.stats[i][1], drop_rates.stats[i][2]);
+                        item_animation.wait_timer();
+                    }
+                }
+                std::cout << "\n YOU FOUND: -- " << item <<" --";
+                item_animation.wait_timer();
+                item_animation.wait_timer();
+                system("CLS");
+
+            }
+            
 
             chunk_editor(x, y);
         }
@@ -128,84 +142,90 @@ class Map: public Chunk{
         
         std::string help_output(int line) {
             std::string output = "";
-            if (line <= 13) {
+            if (line <= 15) {
                 std::ifstream help_table;
-                help_table.open("help_table.txt");
-                for (int i=0; i < line; i++) {
-                    std::getline(help_table, output);
-                    if (i == line) {
+                help_table.open("C:/Users/peter/Documents/GitHub/Ecotopia/help_table.txt");
+                if (help_table.is_open()) {
+                    for (int i=0; i < line; i++) {
+                        std::getline(help_table, output);
+                        if (i == line) {
+                        }    
                     }
+                }
+                else {
+                    output = "";
                 }
             }
             return output; 
         }
 
         void map_output() {
-        // validates that coords are in range, if not new chunk is made
-        if (coords_x >= Chunk::chunk_sizex || coords_y >= Chunk::chunk_sizey) new_chunk();
-        if (coords_x == -1||coords_y == -1) new_chunk();
+            // validates that coords are in range, if not new chunk is made
+            if (coords_x >= Chunk::chunk_sizex || coords_y >= Chunk::chunk_sizey) new_chunk();
+            if (coords_x == -1||coords_y == -1) new_chunk();
 
 
-        std::vector<std::vector<std::string>> map;
-        map = map_vect_generation();
-        std::string player = "O";
-        std::string full_map;
-        std::string temp_map;
-        int position;
+            std::vector<std::vector<std::string>> map;
+            map = map_vect_generation();
+            std::string player = "O";
+            std::string full_map;
+            std::string temp_map;
+            int position;
 
-        if (map[coords_y][coords_x] == " " || map[coords_y][coords_x] ==".") {
-            map[coords_y][coords_x] = player;
-        }
-        else {
-            interactions(map[coords_y][coords_x], coords_x, coords_y);
-            map[coords_y][coords_x] = player;
+            if (map[coords_y][coords_x] == " " || map[coords_y][coords_x] ==".") {
+                map[coords_y][coords_x] = player;
+            }
+            else {
+                interactions(map[coords_y][coords_x], coords_x, coords_y);
+                map[coords_y][coords_x] = player;
 
-        }
-
-
+            }
 
 
-        // loops through each row in 2D map 
-        for (int i = 0; i < map.size(); i++) {
+
+
+            // loops through each row in 2D map 
+            for (int i = 0; i < map.size(); i++) {
+                
+                // loops through each charatcer in the current cycles row and adds to a string of the full row
+                for (int j = 0; j < map[i].size(); j++) {
+                    full_map +=  map[i][j];
+                }
+                // if the player is not on the row it prints the row in green fully 
+                if (full_map.find(player) == std::string::npos) {
+                    std::cout << full_map << help_output(i) << "\n";
+                    full_map.clear();
+                    continue;
+
+
+                }
+                // if the player is on the row is splits the row in two, changing the colour of the player to red, then back to green
+                else if (full_map.find(player) != std::string::npos) {
+
+                    position = full_map.find(player);
+
+                    for (int l = 0; l < position; l++) {
+                        temp_map.push_back(full_map[l]);
+                    }
+                    std::cout << temp_map;
+                    console.text_colour("blue");
+                    std::cout << player;
+                    console.text_colour("green");
+                    temp_map.clear();
+
+                    for (int t = position+1; t < full_map.length(); t++) {
+                        temp_map.push_back(full_map[t]);
+                    }
+
+                    std::cout << temp_map << help_output(i) << "\n";
+                    full_map.clear();
+
+                    }
+                }
+
+                std::cout << "CHUNK["<< chunk_x<<"]["<<chunk_y<<"] | COORDS X: ["<< coords_x<<"] Y: ["<<coords_y<<"]";
             
-            // loops through each charatcer in the current cycles row and adds to a string of the full row
-            for (int j = 0; j < map[i].size(); j++) {
-                full_map +=  map[i][j];
-            }
-            // if the player is not on the row it prints the row in green fully 
-            if (full_map.find(player) == std::string::npos) {
-                std::cout << full_map << help_output(i) << "\n";
-                full_map.clear();
-                continue;
-
-
-            }
-            // if the player is on the row is splits the row in two, changing the colour of the player to red, then back to green
-            else if (full_map.find(player) != std::string::npos) {
-
-                position = full_map.find(player);
-
-                for (int l = 0; l < position; l++) {
-                    temp_map.push_back(full_map[l]);
-                }
-                std::cout << temp_map;
-                console.text_colour("blue");
-                std::cout << player;
-                console.text_colour("green");
-                temp_map.clear();
-
-                for (int t = position+1; t < full_map.length(); t++) {
-                    temp_map.push_back(full_map[t]);
-                }
-
-                std::cout << temp_map << help_output(i) << "\n";
-                full_map.clear();
-
-                }
-            }
-
-            std::cout << "CHUNK["<< chunk_x<<"]["<<chunk_y<<"] | COORDS X: ["<< coords_x<<"] Y: ["<<coords_y<<"]";
-    
+            game();
         }
 
         int input() {
@@ -217,34 +237,73 @@ class Map: public Chunk{
             return kp;
         }
 
+        void inventory_output() {
+            std::ifstream inventory;
+            std::string lines;
+            inventory.open("C:/Users/peter/Documents/GitHub/Ecotopia/inventory.txt");
+            if (inventory.is_open()) {
+                while (std::getline(inventory, lines)) {
+                std::cout << lines << "\n";
+                }
+
+                std::cout << "\n TO EXIT PRESS  - Z - ";
+                int key_press = input();
+                if (key_press == 122) {
+                    map_output();
+                }
+                else {
+                    inventory_output();
+                }
+            }
+            else {
+                std::cout << "ERROR";
+                std::cin.ignore();
+                map_output();
+            }
+            
+        }
+
+        
+        void levelling_output() {
+            // No data returned
+            LevellingUIObject.run_loop(User);
+            map_output();
+        } 
+
+        void stats_output() {
+            StatsUIObject.run_loop();
+            map_output();
+        }
+        
+
         void game() {
             int w = -1;
             int a = -1;
             int s =  1;
-            int d = 1;
-            
-
-            map_output();
-            while (true) {
-                int key_press = input();
-                switch (key_press) {
-                    case 119:
-                        coords_y += w;
-                        break;
-                    case 97:
-                        coords_x += a;
-                        break;
-                    case 115:
-                        coords_y += s;
-                        break;
-                    case 100:
-                        coords_x += d;
-                        break;
-                    default:
-                        break;
-                } 
-                map_output();
-            }
+            int d =  1;
+            int key_press = input();
+            switch (key_press) {
+                case 119:
+                    coords_y += w;
+                    map_output();
+                case 97:
+                    coords_x += a;
+                    map_output();
+                case 115:
+                    coords_y += s;
+                    map_output();
+                case 100:
+                    coords_x += d;
+                    map_output();
+                case 122:
+                    inventory_output();
+                case 120:
+                    levelling_output();
+                case 111:
+                    stats_output();
+                default:
+                    map_output();
+            } 
 
         
     }
@@ -254,5 +313,6 @@ class Map: public Chunk{
 
 
 int main() {
+    menu_function();
     Map map;
 }
