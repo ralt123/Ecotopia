@@ -4,7 +4,7 @@
 #include <vector>
 #include "select_db.h"
 #include "libsqlite.hpp"
-#include "TD.h"
+#include "Towers/towerclass.h"
 using namespace std;
 
 class update_db
