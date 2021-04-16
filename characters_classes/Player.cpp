@@ -12,7 +12,6 @@ Player::Player(std::array<int,2> _position)
     gold = 10;
     experiencePoints = 3;
     srand(time(0));
-    playerStatistics.save_data();
 }
 
 void Player::override_stats(int _maxHealth, int _health, int _attack, int _defence, int _level, int _experience, int _experiencePoints)
