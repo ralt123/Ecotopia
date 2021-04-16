@@ -73,7 +73,7 @@ public:
 	
 	/* Method called when the player flees from combat
 	Returns the string to be outputted
-	Experience is deducted as punishment for fleeing*/
+	Experience is deducted as punishment for fleeing */
 	std::string run_away(Player &User, Alien &Foe);
 };
 #endif

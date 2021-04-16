@@ -13,6 +13,7 @@ struct musicControl
 	{
 		if(musicRunning)
 		{
+			// 
 			PlaySound(NULL, NULL, SND_NODEFAULT);
 			musicRunning = false;
 		}

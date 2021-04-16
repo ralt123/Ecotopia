@@ -123,6 +123,7 @@ void CombatUI::z_key()
 		{
 			// Add item looting when items are implemented
 			clear_screen();
+			// Calls necessary method and outputs required text
 			std::cout << CombatController.run_away(User, Foe);
 			Sleep(3200);
 			returnInt = 1;

@@ -235,6 +235,7 @@ std::string CombatControl::engage_combat(Player &User, Alien &Foe, bool _defendi
 std::string CombatControl::run_away(Player &User, Alien &Foe)
 {
 	playSoundEffect("flee.wav");
+	// Calculates the amount of exp lost by the player for fleeing
 	int deductedExp = (int)Foe.get_expGiven()/2;
 	return "You cowardly fled from your foe.\nYou lost " + std::to_string(deductedExp) + " experience.\n";
 }
