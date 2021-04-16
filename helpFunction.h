@@ -4,19 +4,20 @@ using namespace std;
 
 void printMenu()
 {
+	
 	for(int i=0; i < 50; i++){
 		cout << "-";
 	}
 	
-	cout << "\n\n\t \e[1m 1. Moving.  \e[0m \n";
-	cout << "\t \e[1m 2. Combat. \e[0m \n";
-	cout << "\t \e[1m 3. Aliens. \e[0m \n";
-	cout << "\t \e[1m 4. Gameplay. \e[0m \n";
-	cout << "\t \e[1m 5. Tower Defence. \e[0m \n";
-	cout << "\t \e[1m 6. Game Interface. \e[0m \n";
-	cout << "\t \e[1m 7. Running away from combat. \e[0m \n";
+	cout << "\n\n\t \ 1. Moving.  \n";
+	cout << "\t \ 2. Combat.  \n";
+	cout << "\t \ 3. Aliens. \n";
+	cout << "\t \ 4. Gameplay. \n";
+	cout << "\t \ 5. Tower Defence. \n";
+	cout << "\t \ 6. Game Interface. \n";
+	cout << "\t \ 7. Running away from combat.  \n";
 	
-	cout << "\n\t \e[1m 0. Quit. \e[0m \n\n";
+	cout << "\n\t  0. Quit.  \n\n";
 	for(int i=0; i < 50; i++){
 		cout << "-";
 	}
@@ -31,8 +32,11 @@ int helpFunction()
 	do{
 		
 		printMenu();
+		
 		cout << "Enter your choice: ";
 		cin >> userChoice;
+		system("CLS");
+
 										//Call the specific function for each inputa
 		if(userChoice == 1){				
 			cout << "W and S control forward and backward movement, while A and D are left and right.\n ";
@@ -67,14 +71,16 @@ int helpFunction()
 		}
 		
 		else if(userChoice == 0){
-			cout << "My Pleasure Helping You!\n";
+			//cout << "My Pleasure Helping You!\n";
 		}
 
 		else{
 			cout << "Wrong Choice\n";			
 		}
+
+		
 		
 	}while(userChoice != 0);
-	
+	return 0;
 	 
 }
