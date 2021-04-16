@@ -164,6 +164,7 @@ public:
         {
             cerr << e.what() << endl;
         }
+        return {0,0};
 
     }
 
