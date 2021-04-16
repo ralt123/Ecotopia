@@ -437,7 +437,7 @@ public:
         }
         
 
-
+    return true;
     }
 
     void show_maze() {
