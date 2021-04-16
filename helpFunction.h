@@ -24,7 +24,7 @@ void printMenu()
 }
 
 
-int main()
+int helpFunction()
 {
 	int userChoice;
 	
