@@ -40,8 +40,3 @@ void Time()
 }
 
 
-int main()
-{
-Time();
-return 0;
-}
