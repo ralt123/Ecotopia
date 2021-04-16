@@ -122,10 +122,11 @@ void CombatUI::z_key()
 		case 3:
 		{
 			// Add item looting when items are implemented
-			int deductedExp = (int)Foe.get_expGiven()/2;
-			std::cout << "You cowardly fled from your foe.\nYou lost " << std::to_string(deductedExp) << " experience.\n";
+			clear_screen();
+			std::cout << CombatController.run_away(User, Foe);
 			Sleep(3200);
-			returnInt = 1;	
+			returnInt = 1;
+			break;
 		}
 		default:
 		{

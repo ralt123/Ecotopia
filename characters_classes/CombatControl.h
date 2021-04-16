@@ -2,6 +2,7 @@
 #define COMBAT_CONTROL_H
 
 #include "Player.cpp"
+#include "SoundHandle.cpp"
 
 #include <windows.h>
 #include <stdlib.h>
@@ -69,6 +70,11 @@ public:
 	Takes in two objects as arguments - Player object, alien object and a boolean denoating if the player chose the "defend" action
 	Returns a string containing the data to be outputted to the screen */
 	std::string engage_combat(Player &User, Alien &Foe, bool _defending = false);
+	
+	/* Method called when the player flees from combat
+	Returns the string to be outputted
+	Experience is deducted as punishment for fleeing*/
+	std::string run_away(Player &User, Alien &Foe);
 };
 #endif
 

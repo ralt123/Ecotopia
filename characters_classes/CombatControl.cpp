@@ -103,7 +103,6 @@ std::string CombatControl::player_defending(Player &User, Alien &Foe)
 	std::string outputString = "";
 	char enemySymbol = Foe.characterSymbol;
 	int currentTick = get_animationTick();
-	// Controls delay between frame, delay dictated by animationDelay attribute
 	Sleep(animationDelay);
 	// Current tick dictates the current animation frame
 	if (currentTick < 4)
@@ -123,15 +122,18 @@ std::string CombatControl::player_defending(Player &User, Alien &Foe)
 			// Calls the necessary method to inflict damage upon the player
 			if (combatOption == 2)
 			{
+				playSoundEffect("defend.wav");
 				playerDied = User.preparedDefend(Foe);
 			}
 			else
 			{
+				playSoundEffect("attack.wav");
 				playerDied = User.defend(Foe);
 			}
 			// Run if the player was defeated
 			if (playerDied)
 			{
+				playSoundEffect("gameover.wav");
 				Sleep(1000);
 				return "defeat";
 			}	
@@ -161,7 +163,6 @@ std::string CombatControl::player_attacking(Player &User, Alien &Foe)
 	char enemySymbol = Foe.characterSymbol;
 	std::string outputString = "";
 	int currentTick = get_animationTick();
-	// Controls delay between frame, delay dictated by animationDelay attribute
 	Sleep(animationDelay);
 	// Current tick dictates the current animation frame
 	if (currentTick < 4)
@@ -177,10 +178,12 @@ std::string CombatControl::player_attacking(Player &User, Alien &Foe)
 		outputString = std::string(10, ' ') + "P" + std::string(1, enemySymbol);
 		if (currentTick == 17)
 		{
+			playSoundEffect("attack.wav");
 			// Run if the enemy was defeated
 			if (User.attackFoe(Foe))
 			{
 				Sleep(1000);
+				playSoundEffect("victory.wav");
 				return "victory";
 			}
 		}
@@ -208,6 +211,7 @@ std::string CombatControl::engage_combat(Player &User, Alien &Foe, bool _defendi
 	// Sets necessary attributes
 	if (not verbSet)
 	{
+		playSoundEffect("selectoption.wav");
 		// Player does not attack whilst defending, whilst they do otherwise
 		attacking = !_defending;
 		defending = true;
@@ -226,5 +230,12 @@ std::string CombatControl::engage_combat(Player &User, Alien &Foe, bool _defendi
 	}
 	// Return an empty string to signify that neither participant was defeated
 	return "";
+}
+
+std::string CombatControl::run_away(Player &User, Alien &Foe)
+{
+	playSoundEffect("flee.wav");
+	int deductedExp = (int)Foe.get_expGiven()/2;
+	return "You cowardly fled from your foe.\nYou lost " + std::to_string(deductedExp) + " experience.\n";
 }
 
